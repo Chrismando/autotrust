@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoTrust – Achat auto sécurisé • Experts indépendants</title>
+  <!-- Bootstrap 5, Icons, Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <style>
+    /* ========== RESET & VARIABLES ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: #ffffff;
+      color: #1a2639;
+      overflow-x: hidden;
+    }
+    :root {
+      --noir: #0B0C10;
+      --bleu-fonce: #0B1E33;
+      --blanc: #FFFFFF;
+      --dore: #C6A43F;
+      --dore-light: #E0C87A;
+      --gris-soft: #F5F7FA;
+      --shadow-xl: 0 30px 50px -20px rgba(0, 20, 40, 0.3);
+      --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    /* ========== INTRO SPLASH 7sec (anonyme) ========== */
+    #intro-splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #0b1e33, #081520);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease, visibility 0.8s;
+    }
+    .splash-content {
+      text-align: center;
+      color: white;
+      animation: zoomFade 2.2s ease-out;
+    }
+    .splash-content h1 {
+      font-size: 5.5rem;
+      font-weight: 800;
+      letter-spacing: -2px;
+    }
+    .splash-content .gold-text {
+      color: var(--dore);
+    }
+    .splash-message {
+      font-size: 1.6rem;
+      max-width: 750px;
+      margin: 1.8rem auto;
+      background: rgba(255, 255, 255, 0.07);
+      padding: 1.2rem 2.2rem;
+      border-radius: 80px;
+      border-left: 6px solid var(--dore);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+    }
+    @keyframes zoomFade {
+      0% { opacity: 0; transform: scale(0.94); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    /* ========== TYPO & BOUTONS ========== */
+    h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--bleu-fonce);
+    }
+    .btn-gold {
+      background: var(--dore);
+      color: var(--noir);
+      font-weight: 700;
+      border: none;
+      border-radius: 60px;
+      padding: 16px 42px;
+      transition: var(--transition);
+      box-shadow: 0 15px 30px rgba(198, 164, 63, 0.35);
+      font-size: 1.1rem;
+    }
+    .btn-gold:hover {
+      background: #b38f2e;
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 25px 35px rgba(198, 164, 63, 0.5);
+      color: #000;
+    }
+    .btn-outline-gold {
+      background: transparent;
+      border: 2px solid var(--dore);
+      color: var(--dore);
+      font-weight: 600;
+      border-radius: 60px;
+      padding: 14px 36px;
+      transition: var(--transition);
+    }
+    .btn-outline-gold:hover {
+      background: var(--dore);
+      color: #000;
+      transform: scale(1.04);
+      box-shadow: 0 10px 20px rgba(198,164,63,0.3);
+    }
+    .section-padding {
+      padding: 120px 0;
+    }
+    .bg-bleu {
+      background-color: var(--bleu-fonce);
+    }
+    .gold-text {
+      color: var(--dore);
+    }
+    .border-gold-bottom {
+      border-bottom: 4px solid var(--dore);
+      width: 90px;
+      margin: 1rem auto 2.5rem;
+    }
+    /* ========== STICKY NAV ========== */
+    .sticky-top {
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    }
+    .navbar-brand {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    /* ========== CARTES & HOVER ========== */
+    .hover-card {
+      transition: var(--transition);
+      border: none;
+      border-radius: 32px;
+      background: white;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.02);
+      height: 100%;
+      padding: 2rem 1.5rem;
+    }
+    .hover-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: var(--shadow-xl);
+      border-bottom: 6px solid var(--dore);
+    }
+    .card-icon {
+      font-size: 3.2rem;
+      color: var(--dore);
+      margin-bottom: 1.5rem;
+    }
+    /* ========== QUIZ ULTRA COMPLET ========== */
+    .quiz-master {
+      background: radial-gradient(circle at 10% 30%, #12314f, #0a1a2b);
+      border-radius: 70px 70px 40px 40px;
+      padding: 60px 50px;
+      border: 1px solid rgba(198,164,63,0.3);
+      box-shadow: 0 40px 60px rgba(0,0,0,0.5);
+    }
+    .quiz-header {
+      text-align: center;
+      color: white;
+      margin-bottom: 3rem;
+    }
+    .quiz-header h2 {
+      color: white;
+      font-size: 3.2rem;
+    }
+    .quiz-question-card {
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(10px);
+      border-radius: 50px;
+      padding: 25px 30px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(255,215,120,0.2);
+      transition: 0.3s;
+    }
+    .quiz-question-card p {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1.2rem;
+    }
+    .quiz-option {
+      background: rgba(0,0,0,0.25);
+      border-radius: 40px;
+      padding: 15px 30px;
+      margin: 10px 0;
+      color: #ddd;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.2s;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+    .quiz-option:hover {
+      background: rgba(198,164,63,0.2);
+      border-color: var(--dore);
+      color: white;
+      transform: translateX(15px);
+    }
+    .quiz-option.selected {
+      background: var(--dore);
+      color: #000;
+      font-weight: 700;
+      border-color: white;
+      box-shadow: 0 5px 15px #c6a43f80;
+    }
+    .quiz-result-box {
+      background: white;
+      border-radius: 50px;
+      padding: 40px;
+      color: var(--bleu-fonce);
+      margin-top: 40px;
+      box-shadow: inset 0 0 0 2px var(--dore), 0 20px 30px #00000040;
+    }
+    .explain-item {
+      background: #f0f3f8;
+      border-radius: 35px;
+      padding: 18px 25px;
+      margin: 15px 0;
+      border-left: 8px solid var(--dore);
+    }
+    /* ========== REVEAL SCROLL ========== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(45px);
+      transition: opacity 0.9s, transform 0.9s;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* ========== FLOATING WHATSAPP ========== */
+    .wa-float {
+      position: fixed;
+      bottom: 35px;
+      right: 35px;
+      background: #25D366;
+      color: white;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      box-shadow: 0 20px 35px rgba(0,0,0,0.3);
+      z-index: 999;
+      transition: 0.3s;
+      border: 4px solid white;
+    }
+    .wa-float:hover {
+      background: #128C7E;
+      transform: scale(1.18) rotate(8deg);
+    }
+    /* ========== FOOTER ========== */
+    .footer {
+      background: var(--noir);
+      color: #aaa;
+      padding: 70px 0 40px;
+    }
+    .footer a {
+      color: #aaa;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .footer a:hover {
+      color: var(--dore);
+    }
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      h2 { font-size: 2.4rem; }
+      .splash-content h1 { font-size: 3.5rem; }
+      .quiz-master { padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- SPLASH INTRO 7 SECONDES (totalement anonyme) -->
+  <div id="intro-splash">
+    <div class="splash-content">
+      <h1><span class="gold-text">Auto</span>Trust</h1>
+      <div class="splash-message">
+        <i class="fas fa-shield-halded fa-3x gold-text mb-3"></i>
+        <p class="fs-2 fw-semibold">On sécurise votre achat auto.<br>Vous arrêtez de perdre de l'argent.</p>
+        <p class="opacity-75 fs-5"><i class="fas fa-check-circle gold-text me-2"></i>Déjà +700 acheteurs protégés • 0 arnaque</p>
+      </div>
+      <div class="spinner-grow text-warning mt-4" style="width: 3rem; height: 3rem;"></div>
+    </div>
+  </div>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <a href="https://wa.me/243860122112?text=Bonjour,%20je%20veux%20savoir%20plus%20sur%20l'accompagnement%20automobile" class="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+  <!-- STICKY NAVIGATION -->
+  <nav class="navbar navbar-expand-lg sticky-top navbar-light py-3">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#"><span class="text-dark">Auto</span><span class="gold-text">Trust</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#probleme">Risques</a></li>
+          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#process">Méthode</a></li>
+          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#quiz">Quiz expert</a></li>
+          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#confiance">Pourquoi nous</a></li>
+          <li class="nav-item ms-lg-3">
+            <a class="btn btn-gold py-2 px-4" href="https://wa.me/243860122112?text=Bonjour%20équipe%20AutoTrust" target="_blank"><i class="fab fa-whatsapp me-2"></i>Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION (ultra persuasive) -->
+  <section class="bg-bleu text-white section-padding" style="background: linear-gradient(135deg, #0B1E33, #07121f);">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 reveal">
+          <span class="badge bg-gold text-dark px-4 py-2 fs-6 mb-4"><i class="fas fa-shield me-2"></i>CONFIANCE ABSOLUE</span>
+          <h1 class="display-3 fw-bolder lh-1">Acheter une voiture sans se faire avoir ? <span class="gold-text">C'est notre métier.</span></h1>
+          <p class="fs-4 my-4 text-white-70">Nous inspectons, vérifions et sécurisons chaque achat. Plus de 700 acheteurs nous font confiance.</p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#quiz" class="btn btn-gold btn-lg px-5 py-3"><i class="fas fa-question-circle me-2"></i>Testez vos connaissances (quiz)</a>
+            <a href="https://wa.me/243860122112?text=Bonjour,%20j'ai%20besoin%20d'un%20expert%20auto" target="_blank" class="btn btn-outline-gold btn-lg px-5 py-3"><i class="fab fa-whatsapp me-2"></i>Parler à un expert</a>
+          </div>
+          <div class="mt-5 d-flex gap-4 flex-wrap text-white-50">
+            <span><i class="fas fa-check-circle gold-text me-1"></i> Commission 5% (local)</span>
+            <span><i class="fas fa-check-circle gold-text me-1"></i> Garantie 1 mois</span>
+            <span><i class="fas fa-check-circle gold-text me-1"></i> Inspection 48h</span>
+          </div>
+        </div>
+        <div class="col-lg-5 d-none d-lg-block text-end reveal">
+          <i class="fas fa-car-side fa-8x gold-text opacity-50" style="filter: drop-shadow(0 0 20px #C6A43F);"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION POURQUOI AUTOTRUST EXISTE (problème) -->
+  <section class="section-padding" id="probleme" style="background:#fafcff;">
+    <div class="container">
+      <div class="text-center reveal">
+        <span class="gold-text text-uppercase fw-semibold tracking-wide">Le vrai problème</span>
+        <h2 class="mt-2">Pourquoi des milliers d'acheteurs perdent leur argent</h2>
+        <div class="border-gold-bottom"></div>
+      </div>
+      <div class="row g-4 mt-5">
+        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-oil-can card-icon"></i><h4>Vices cachés</h4><p>Moteur soufflé, boîte HS : en moyenne 3500€ de réparation après achat.</p></div></div>
+        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-file-invoice-dollar card-icon"></i><h4>Arnaques aux documents</h4><p>Faux contrôle technique, kilométrage trafiqué, origine volée.</p></div></div>
+        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-handshake-slash card-icon"></i><h4>Vendeurs fantômes</h4><p>Acompte versé, plus personne. Vous restez sans recours.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION & VISION (anonyme) -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-6 reveal"><div class="p-5 bg-white rounded-5 shadow h-100 border-start border-5 border-gold"><i class="fas fa-bullseye fa-4x gold-text mb-3"></i><h3>Notre mission</h3><p class="fs-5">Sécuriser chaque transaction automobile grâce à une inspection indépendante, sans conflit d'intérêt.</p></div></div>
+        <div class="col-md-6 reveal"><div class="p-5 bg-white rounded-5 shadow h-100 border-start border-5 border-gold"><i class="fas fa-eye fa-4x gold-text mb-3"></i><h3>Notre vision</h3><p class="fs-5">Devenir le standard de confiance pour l'achat de véhicules d'occasion en Afrique et pour la diaspora.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMENT ÇA MARCHE (étapes claires) -->
+  <section class="bg-bleu text-white section-padding" id="process">
+    <div class="container">
+      <h2 class="text-center text-white reveal">Notre processus en 3 actes</h2>
+      <div class="border-gold-bottom"></div>
+      <div class="row mt-5 g-4">
+        <div class="col-lg-4 reveal"><div class="p-5 bg-white text-dark rounded-5 h-100"><span class="display-1 fw-bold gold-text opacity-50">1</span><h4 class="mt-3">Vous définissez votre budget et modèle</h4><p>On recherche les meilleures annonces et on pré-sélectionne 3 à 5 véhicules.</p></div></div>
+        <div class="col-lg-4 reveal"><div class="p-5 bg-white text-dark rounded-5 h-100"><span class="display-1 fw-bold gold-text opacity-50">2</span><h4 class="mt-3">Inspection technique 48h</h4><p>Moteur, boîte, électronique, châssis, essai routier – rapport photo/vidéo.</p></div></div>
+        <div class="col-lg-4 reveal"><div class="p-5 bg-white text-dark rounded-5 h-100"><span class="display-1 fw-bold gold-text opacity-50">3</span><h4 class="mt-3">Achat sécurisé + garantie</h4><p>Vous validez, nous négocions et finalisons. Garantie 1 mois incluse.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES DÉTAILLÉS (cartes interactives) -->
+  <section class="section-padding" id="services">
+    <div class="container">
+      <h2 class="text-center reveal">Nos services transparents</h2>
+      <div class="border-gold-bottom"></div>
+      <div class="row mt-5 g-4">
+        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-magnifying-glass-dollar card-icon"></i><h4>Recherche personnalisée</h4><p>Sourcing selon critères stricts, 0 frais sans achat.</p><a href="https://wa.me/243860122112?text=Recherche%20véhicule" target="_blank" class="btn btn-outline-gold mt-3">Demander</a></div></div>
+        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-clipboard-list card-icon"></i><h4>Inspection 48h</h4><p>Vérification complète par mécanicien diplômé.</p><a href="https://wa.me/243860122112?text=Inspection%20auto" target="_blank" class="btn btn-outline-gold mt-3">Réserver</a></div></div>
+        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-hand-peace card-icon"></i><h4>Achat local - 5%</h4><p>Accompagnement total, négociation, paperasse.</p><a href="https://wa.me/243860122112?text=Accompagnement%20achat%20local" target="_blank" class="btn btn-outline-gold mt-3">+ d'infos</a></div></div>
+        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-ship card-icon"></i><h4>Importation - 10%</h4><p>Depuis l'étranger, inspection incluse avant expédition.</p><a href="https://wa.me/243860122112?text=Importation%20véhicule" target="_blank" class="btn btn-outline-gold mt-3">Simuler</a></div></div>
+        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-truck-fast card-icon"></i><h4>Livraison 100$</h4><p>Véhicule livré chez vous après achat (sous conditions).</p><a href="https://wa.me/243860122112?text=Livraison%20auto" target="_blank" class="btn btn-outline-gold mt-3">Planifier</a></div></div>
+        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-shield-heart card-icon"></i><h4>Garantie 1 mois</h4><p>Moteur, boîte, transmission. Possibilité d'extension.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== QUIZ ULTRA COMPLET 10 QUESTIONS ========== -->
+  <section class="section-padding bg-bleu" id="quiz">
+    <div class="container">
+      <div class="quiz-master reveal">
+        <div class="quiz-header">
+          <i class="fas fa-brain fa-4x gold-text mb-3"></i>
+          <h2>AutoQuiz : êtes-vous incollable ?</h2>
+          <p class="fs-4 text-white-50">10 questions · Répondez et obtenez votre profil d'acheteur</p>
+        </div>
+
+        <!-- Conteneur des questions dynamiques -->
+        <div id="quizContainer"></div>
+
+        <!-- Bouton principal du quiz -->
+        <div class="text-center mt-4">
+          <button id="quizNextBtn" class="btn btn-gold btn-lg px-5 py-3" onclick="handleQuizNext()">Démarrer le quiz</button>
+        </div>
+
+        <!-- Résultat et corrections -->
+        <div id="quizResultBox" class="quiz-result-box" style="display: none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POURQUOI NOUS FAIRE CONFIANCE (4 piliers) -->
+  <section class="section-padding" id="confiance">
+    <div class="container">
+      <h2 class="text-center reveal">Pourquoi AutoTrust est différent</h2>
+      <div class="border-gold-bottom"></div>
+      <div class="row mt-5 g-4 text-center">
+        <div class="col-md-3 reveal"><i class="fas fa-scale-balanced fa-3x gold-text"></i><h5 class="mt-3">Indépendance</h5><p>Nous ne vendons pas de voitures, nous les inspectons.</p></div>
+        <div class="col-md-3 reveal"><i class="fas fa-microchip fa-3x gold-text"></i><h5 class="mt-3">Expertise technique</h5><p>Mécaniciens aguerris, outils de diagnostic.</p></div>
+        <div class="col-md-3 reveal"><i class="fas fa-file-lines fa-3x gold-text"></i><h5 class="mt-3">Rapport détaillé</h5><p>Photos, vidéos, commentaires clairs.</p></div>
+        <div class="col-md-3 reveal"><i class="fas fa-gavel fa-3x gold-text"></i><h5 class="mt-3">Garantie contractuelle</h5><p>1 mois sur les organes majeurs.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVANTAGES DIASPORA & LOCAUX -->
+  <section class="bg-bleu text-white section-padding">
+    <div class="container">
+      <div class="row g-5 align-items-center">
+        <div class="col-md-6 reveal"><i class="fas fa-earth-europe fa-4x gold-text"></i><h3 class="text-white mt-3">Vous vivez à l'étranger ?</h3><p class="fs-5">On devient vos yeux et vos mains sur place. Inspection filmée, achat, export.</p></div>
+        <div class="col-md-6 reveal"><i class="fas fa-location-dot fa-4x gold-text"></i><h3 class="text-white mt-3">Client local ?</h3><p class="fs-5">On vous fait gagner du temps et surtout vous évite des pièges à l'achat.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENGAGEMENT ÉTHIQUE (anonyme) -->
+  <section class="section-padding text-center">
+    <div class="container reveal">
+      <i class="fas fa-hand-holding-heart fa-5x gold-text mb-4"></i>
+      <h2>Notre engagement éthique</h2>
+      <p class="fs-4 col-lg-8 mx-auto">Nous refusons une voiture si elle est dangereuse ou surcotée. Votre sécurité prime sur notre commission.</p>
+    </div>
+  </section>
+
+  <!-- FAQ Compacte -->
+  <section class="bg-light section-padding">
+    <div class="container">
+      <h2 class="text-center reveal">FAQ - les 3 questions les plus fréquentes</h2>
+      <div class="border-gold-bottom"></div>
+      <div class="row mt-5 justify-content-center">
+        <div class="col-lg-8">
+          <div class="accordion" id="faqAccordion">
+            <div class="accordion-item reveal"><h2 class="accordion-header"><button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#f1">Que faire si je suis diaspora ?</button></h2><div id="f1" class="accordion-collapse collapse show"><div class="accordion-body">On agit pour vous : recherche, inspection filmée, achat, formalités export. Vous recevez une vidéo complète.</div></div></div>
+            <div class="accordion-item reveal"><h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f2">La garantie d’un mois, c’est sérieux ?</button></h2><div id="f2" class="accordion-collapse collapse"><div class="accordion-body">Oui, écrite. Moteur, boîte, pont. En cas de panne couverte, on prend en charge la réparation dans notre réseau.</div></div></div>
+            <div class="accordion-item reveal"><h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f3">Et si le véhicule ne me plaît pas ?</button></h2><div id="f3" class="accordion-collapse collapse"><div class="accordion-body">Vous n'achetez qu'après validation. Si le rapport est négatif ou que vous refusez, on cherche un autre véhicule.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TÉMOIGNAGES CLIENTS (simulés, anonymes) -->
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="text-center reveal">Ils ont osé nous faire confiance</h2>
+      <div class="border-gold-bottom"></div>
+      <div class="row mt-5 g-4">
+        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow h-100"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Grâce à leur inspection, j’ai évité une épave. Ils m'ont trouvé un SUV parfait." – <strong>Laure B.</strong></p></div></div>
+        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow h-100"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Je vis à Paris, ils ont tout géré à Kinshasa. Voiture livrée conforme." – <strong>Marc K.</strong></p></div></div>
+        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow h-100"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"La garantie moteur d’un mois m’a sauvé 2000€. Merci à toute l’équipe." – <strong>Serge N.</strong></p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION FINAL -->
+  <section class="bg-bleu text-white text-center section-padding">
+    <div class="container reveal">
+      <h2 class="text-white">Arrêtez d'acheter à l'aveugle.</h2>
+      <p class="fs-2 fw-light">1 inspection = des milliers d'économies.</p>
+      <a href="https://wa.me/243860122112?text=Bonjour,%20je%20veux%20être%20sécurisé%20pour%20mon%20achat" target="_blank" class="btn btn-gold btn-lg px-5 py-3 mt-3"><i class="fab fa-whatsapp me-2"></i>Contactez-nous maintenant</a>
+    </div>
+  </section>
+
+  <!-- FOOTER (sans nom de fondateur) -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-md-5">
+          <h3 class="text-white">Auto<span class="gold-text">Trust</span></h3>
+          <p>© AutoTrust – Tous droits réservés. Créé par une équipe d’experts indépendants.</p>
+        </div>
+        <div class="col-md-4">
+          <h5>Liens utiles</h5>
+          <ul class="list-unstyled">
+            <li><a href="#probleme">Le problème</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#quiz">Quiz</a></li>
+            <li><a href="#confiance">Pourquoi nous</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <p><i class="fab fa-whatsapp gold-text me-2"></i> +243 860 122 112</p>
+          <p><i class="far fa-envelope gold-text me-2"></i> contact@autotrust.cd</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS : Bootstrap + Quiz + Intro + Reveal -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ---------- INTRO SPLASH 7 secondes ----------
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        document.getElementById('intro-splash').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('intro-splash').style.visibility = 'hidden';
+        }, 900);
+      }, 7000);
+    });
+
+    // ---------- REVEAL SCROLL ----------
+    const revealElements = document.querySelectorAll('.reveal');
+    function updateReveal() {
+      const windowHeight = window.innerHeight;
+      revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect().top;
+        if (rect < windowHeight - 120) el.classList.add('active');
+        else el.classList.remove('active');
+      });
+    }
+    window.addEventListener('scroll', updateReveal);
+    window.addEventListener('load', updateReveal);
+
+    // ---------- QUIZ COMPLET 10 QUESTIONS ----------
+    const quizQuestions = [
+      { question: "Que vérifier en priorité sur une voiture d'occasion ?", options: ["La couleur", "L'historique d'entretien et l'état moteur", "Les enjoliveurs", "L'état des tapis"], correct: 1, explanation: "L'historique d'entretien révèle les vrais problèmes mécaniques." },
+      { question: "Pourquoi un acheteur devrait-il faire appel à un service comme AutoTrust ?", options: ["Pour payer plus cher", "Pour éviter les vices cachés et arnaques", "Pour avoir un cafe", "Pour ralentir la vente"], correct: 1, explanation: "Un expert indépendant détecte ce que vous ne voyez pas." },
+      { question: "Que signifie un certificat de non-gage ?", options: ["Que la voiture n'est pas gagée", "Que le vendeur est honnête", "Que le moteur est bon", "Que le prix est négociable"], correct: 0, explanation: "Il garantit l'absence de créance sur le véhicule." },
+      { question: "Quel est l'avantage d'une inspection pré-achat ?", options: ["Perdre du temps", "Détecter des défauts cachés", "Augmenter le prix", "Faire plaisir au vendeur"], correct: 1, explanation: "L'inspection protège votre achat." },
+      { question: "Quand doit-on essayer une voiture ?", options: ["Jamais", "Uniquement sur autoroute", "Sur route variée pour sentir boîte, embrayage, bruits", "Dans une cage à rouleaux"], correct: 2, explanation: "L'essai routier révèle des anomalies invisibles à l'arrêt." },
+      { question: "Pourquoi la diaspora a-t-elle besoin d'un service comme AutoTrust ?", options: ["Pour payer plus de taxes", "Pour avoir un intermédiaire fiable sur place", "Parce que c'est tendance", "Pour envoyer de l'argent"], correct: 1, explanation: "Un correspondant local sérieux remplace votre absence." },
+      { question: "Quelle est la commission pour un achat local accompagné ?", options: ["15%", "5%", "10%", "20%"], correct: 1, explanation: "AutoTrust facture 5% du prix d'achat pour l'accompagnement local." },
+      { question: "Que faire si le vendeur demande un acompte urgent ?", options: ["Accepter immédiatement", "Demander des garanties et contacter AutoTrust", "Payer en liquide", "Ignorer"], correct: 1, explanation: "L'urgence est souvent un signe d'arnaque." },
+      { question: "Quel élément est généralement inspecté lors d'une check-list professionnelle ?", options: ["Moteur, boîte, châssis, électronique", "La couleur des sièges", "Le porte-clés", "La marque des pneus"], correct: 0, explanation: "Les points critiques sont mécaniques et structurels." },
+      { question: "Que fait AutoTrust si le véhicule est dangereux ?", options: ["On le vend quand même", "On vous conseille de ne pas l'acheter", "On augmente la garantie", "On le répare nous-mêmes"], correct: 1, explanation: "Notre éthique : refuser les voitures à risque." }
+    ];
+
+    let currentIdx = 0;
+    let answers = new Array(quizQuestions.length).fill(null);
+    let quizActive = false;
+    const quizContainer = document.getElementById('quizContainer');
+    const quizNextBtn = document.getElementById('quizNextBtn');
+    const quizResultDiv = document.getElementById('quizResultBox');
+
+    function displayQuestion(index) {
+      if (!quizActive) return;
+      const q = quizQuestions[index];
+      let html = `<div class="quiz-question-card"><p>${index+1}. ${q.question}</p>`;
+      q.options.forEach((opt, optIdx) => {
+        const selectedClass = (answers[index] === optIdx) ? 'selected' : '';
+        html += `<div class="quiz-option ${selectedClass}" onclick="selectQuizAnswer(${index}, ${optIdx})">${opt}</div>`;
+      });
+      html += '</div>';
+      quizContainer.innerHTML = html;
+
+      if (index === quizQuestions.length - 1) {
+        quizNextBtn.textContent = 'Voir mes résultats';
+      } else {
+        quizNextBtn.textContent = 'Question suivante →';
+      }
+    }
+
+    window.selectQuizAnswer = function(qIdx, optIdx) {
+      answers[qIdx] = optIdx;
+      displayQuestion(currentIdx); // re-rend pour mise à jour visuelle
+    };
+
+    window.handleQuizNext = function() {
+      if (!quizActive) {
+        // Lancer le quiz
+        quizActive = true;
+        currentIdx = 0;
+        answers.fill(null);
+        quizResultDiv.style.display = 'none';
+        displayQuestion(0);
+        return;
+      }
+      if (currentIdx >= quizQuestions.length) {
+        // reset si déjà fini
+        quizActive = true;
+        currentIdx = 0;
+        answers.fill(null);
+        quizResultDiv.style.display = 'none';
+        displayQuestion(0);
+        return;
+      }
+      // Vérifier réponse ? On peut passer sans réponse mais on tolère null
+      // (pas de blocage pour fluidité, mais on signale si on veut)
+      if (answers[currentIdx] === null) {
+        if (!confirm("Vous n'avez pas répondu à cette question. Continuer quand même ?")) return;
+      }
+      if (currentIdx < quizQuestions.length - 1) {
+        currentIdx++;
+        displayQuestion(currentIdx);
+      } else {
+        // Fin du quiz, afficher résultats
+        quizContainer.innerHTML = ''; // nettoie
+        quizNextBtn.textContent = '⟲ Refaire le quiz';
+        computeQuizResults();
+      }
+    };
+
+    function computeQuizResults() {
+      let correctCount = 0;
+      let explanations = '';
+      quizQuestions.forEach((q, idx) => {
+        const userChoice = answers[idx];
+        const isCorrect = (userChoice === q.correct);
+        if (isCorrect) correctCount++;
+        const userAnsText = (userChoice !== null) ? q.options[userChoice] : "(non répondu)";
+        const correctText = q.options[q.correct];
+        explanations += `<div class="explain-item"><strong>${idx+1}. ${q.question}</strong><br>${isCorrect ? '✅' : '❌'} Votre réponse : ${userAnsText}<br><span class="gold-text fw-semibold">✔ Réponse correcte : ${correctText}</span><br><small>${q.explanation}</small></div>`;
+      });
+      let profileMsg = "";
+      if (correctCount <= 3) profileMsg = "🔴 Vous êtes très exposé aux risques. Laissez des experts vous guider.";
+      else if (correctCount <= 7) profileMsg = "🟡 Bonnes bases, mais quelques angles morts. AutoTrust vous couvre.";
+      else profileMsg = "🟢 Excellent niveau ! Même les pros utilisent AutoTrust pour gagner du temps.";
+      quizResultDiv.innerHTML = `<h3><i class="fas fa-clipboard-check me-2 gold-text"></i> Résultat : ${correctCount}/10</h3><p class="fs-4 fw-light">${profileMsg}</p>${explanations}<div class="text-center mt-4"><a href="https://wa.me/243860122112?text=Bonjour,%20j'ai%20fait%20le%20quiz%20et%20je%20veux%20parler%20à%20un%20expert" target="_blank" class="btn btn-gold py-3 px-5"><i class="fab fa-whatsapp me-2"></i>Discuter de mes résultats</a></div>`;
+      quizResultDiv.style.display = 'block';
+      currentIdx = quizQuestions.length; // état fini
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>
