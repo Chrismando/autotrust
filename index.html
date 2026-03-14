@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutoTrust – Achat auto sécurisé • Experts indépendants</title>
+  <title>AutoTrust – Courtier & accompagnement auto • Achat sécurisé</title>
   <!-- Bootstrap 5, Icons, Fonts -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet">
   <style>
     /* ========== RESET & VARIABLES ========== */
     * {
@@ -17,7 +17,7 @@
     }
     body {
       font-family: "Inter", sans-serif;
-      background-color: #ffffff;
+      background: #ffffff;
       color: #1a2639;
       overflow-x: hidden;
     }
@@ -31,14 +31,14 @@
       --shadow-xl: 0 30px 50px -20px rgba(0, 20, 40, 0.3);
       --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     }
-    /* ========== INTRO SPLASH 7sec (anonyme) ========== */
+    /* ========== INTRO SPLASH 7sec ========== */
     #intro-splash {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(145deg, #0b1e33, #081520);
+      background: linear-gradient(145deg, #0b1e33, #07121f);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -73,7 +73,7 @@
       0% { opacity: 0; transform: scale(0.94); }
       100% { opacity: 1; transform: scale(1); }
     }
-    /* ========== TYPO & BOUTONS ========== */
+    /* ========== TYPOGRAPHIE & BOUTONS ========== */
     h2 {
       font-size: 3rem;
       font-weight: 700;
@@ -156,7 +156,7 @@
       color: var(--dore);
       margin-bottom: 1.5rem;
     }
-    /* ========== QUIZ ULTRA COMPLET ========== */
+    /* ========== QUIZ AVEC MINUTERIE 12s ========== */
     .quiz-master {
       background: radial-gradient(circle at 10% 30%, #12314f, #0a1a2b);
       border-radius: 70px 70px 40px 40px;
@@ -172,6 +172,16 @@
     .quiz-header h2 {
       color: white;
       font-size: 3.2rem;
+    }
+    .timer-badge {
+      font-size: 2rem;
+      background: rgba(0,0,0,0.4);
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      display: inline-block;
+      border: 2px solid var(--dore);
+      color: var(--dore);
+      margin-bottom: 2rem;
     }
     .quiz-question-card {
       background: rgba(255,255,255,0.07);
@@ -211,6 +221,10 @@
       font-weight: 700;
       border-color: white;
       box-shadow: 0 5px 15px #c6a43f80;
+    }
+    .quiz-option.disabled {
+      pointer-events: none;
+      opacity: 0.6;
     }
     .quiz-result-box {
       background: white;
@@ -283,20 +297,20 @@
   </style>
 </head>
 <body>
-  <!-- SPLASH INTRO 7 SECONDES (totalement anonyme) -->
+  <!-- SPLASH INTRO 7 SECONDES -->
   <div id="intro-splash">
     <div class="splash-content">
       <h1><span class="gold-text">Auto</span>Trust</h1>
       <div class="splash-message">
         <i class="fas fa-shield-halded fa-3x gold-text mb-3"></i>
-        <p class="fs-2 fw-semibold">On sécurise votre achat auto.<br>Vous arrêtez de perdre de l'argent.</p>
-        <p class="opacity-75 fs-5"><i class="fas fa-check-circle gold-text me-2"></i>Déjà +700 acheteurs protégés • 0 arnaque</p>
+        <p class="fs-2 fw-semibold">Votre courtier automobile indépendant.<br>On inspecte, on négocie, on sécurise.</p>
+        <p class="opacity-75 fs-5"><i class="fas fa-check-circle gold-text me-2"></i>Dès 5000$ de budget • 200$ ouverture dossier • 120$ accompagnement final</p>
       </div>
       <div class="spinner-grow text-warning mt-4" style="width: 3rem; height: 3rem;"></div>
     </div>
   </div>
 
-  <!-- FLOATING WHATSAPP BUTTON -->
+  <!-- FLOATING WHATSAPP BUTTON (même numéro) -->
   <a href="https://wa.me/243860122112?text=Bonjour,%20je%20veux%20savoir%20plus%20sur%20l'accompagnement%20automobile" class="wa-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
   <!-- STICKY NAVIGATION -->
@@ -308,10 +322,10 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
         <ul class="navbar-nav align-items-center">
-          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#probleme">Risques</a></li>
-          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#services">Services</a></li>
-          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#process">Méthode</a></li>
-          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#quiz">Quiz expert</a></li>
+          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#courtier">Notre mission</a></li>
+          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#services">Services & tarifs</a></li>
+          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#process">Comment ça marche</a></li>
+          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#quiz">Quiz chrono</a></li>
           <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#confiance">Pourquoi nous</a></li>
           <li class="nav-item ms-lg-3">
             <a class="btn btn-gold py-2 px-4" href="https://wa.me/243860122112?text=Bonjour%20équipe%20AutoTrust" target="_blank"><i class="fab fa-whatsapp me-2"></i>Contact</a>
@@ -321,22 +335,22 @@
     </div>
   </nav>
 
-  <!-- HERO SECTION (ultra persuasive) -->
+  <!-- HERO SECTION - NOUVELLE MISSION (courtage) -->
   <section class="bg-bleu text-white section-padding" style="background: linear-gradient(135deg, #0B1E33, #07121f);">
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-lg-7 reveal">
-          <span class="badge bg-gold text-dark px-4 py-2 fs-6 mb-4"><i class="fas fa-shield me-2"></i>CONFIANCE ABSOLUE</span>
-          <h1 class="display-3 fw-bolder lh-1">Acheter une voiture sans se faire avoir ? <span class="gold-text">C'est notre métier.</span></h1>
-          <p class="fs-4 my-4 text-white-70">Nous inspectons, vérifions et sécurisons chaque achat. Plus de 700 acheteurs nous font confiance.</p>
+          <span class="badge bg-gold text-dark px-4 py-2 fs-6 mb-4"><i class="fas fa-handshake me-2"></i>COURTIER AUTOMOBILE INDÉPENDANT</span>
+          <h1 class="display-3 fw-bolder lh-1">Vous voulez une voiture fiable sans vous faire arnaquer ? <span class="gold-text">On s'occupe de tout.</span></h1>
+          <p class="fs-4 my-4 text-white-70">Recherche personnalisée, inspection complète, négociation et accompagnement jusqu'à l'achat. Budget dès 5 000 $.</p>
           <div class="d-flex flex-wrap gap-3">
-            <a href="#quiz" class="btn btn-gold btn-lg px-5 py-3"><i class="fas fa-question-circle me-2"></i>Testez vos connaissances (quiz)</a>
-            <a href="https://wa.me/243860122112?text=Bonjour,%20j'ai%20besoin%20d'un%20expert%20auto" target="_blank" class="btn btn-outline-gold btn-lg px-5 py-3"><i class="fab fa-whatsapp me-2"></i>Parler à un expert</a>
+            <a href="#quiz" class="btn btn-gold btn-lg px-5 py-3"><i class="fas fa-hourglass-half me-2"></i>Quiz minute (12s par question)</a>
+            <a href="https://wa.me/243860122112?text=Bonjour,%20je%20souhaite%20être%20accompagné%20pour%20l'achat%20d'un%20véhicule" target="_blank" class="btn btn-outline-gold btn-lg px-5 py-3"><i class="fab fa-whatsapp me-2"></i>Parler à un courtier</a>
           </div>
           <div class="mt-5 d-flex gap-4 flex-wrap text-white-50">
-            <span><i class="fas fa-check-circle gold-text me-1"></i> Commission 5% (local)</span>
-            <span><i class="fas fa-check-circle gold-text me-1"></i> Garantie 1 mois</span>
-            <span><i class="fas fa-check-circle gold-text me-1"></i> Inspection 48h</span>
+            <span><i class="fas fa-check-circle gold-text me-1"></i> 200$ ouverture dossier</span>
+            <span><i class="fas fa-check-circle gold-text me-1"></i> 120$ accompagnement final</span>
+            <span><i class="fas fa-check-circle gold-text me-1"></i> Inspection pré-achat incluse</span>
           </div>
         </div>
         <div class="col-lg-5 d-none d-lg-block text-end reveal">
@@ -346,172 +360,172 @@
     </div>
   </section>
 
-  <!-- SECTION POURQUOI AUTOTRUST EXISTE (problème) -->
-  <section class="section-padding" id="probleme" style="background:#fafcff;">
-    <div class="container">
-      <div class="text-center reveal">
-        <span class="gold-text text-uppercase fw-semibold tracking-wide">Le vrai problème</span>
-        <h2 class="mt-2">Pourquoi des milliers d'acheteurs perdent leur argent</h2>
-        <div class="border-gold-bottom"></div>
-      </div>
-      <div class="row g-4 mt-5">
-        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-oil-can card-icon"></i><h4>Vices cachés</h4><p>Moteur soufflé, boîte HS : en moyenne 3500€ de réparation après achat.</p></div></div>
-        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-file-invoice-dollar card-icon"></i><h4>Arnaques aux documents</h4><p>Faux contrôle technique, kilométrage trafiqué, origine volée.</p></div></div>
-        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-handshake-slash card-icon"></i><h4>Vendeurs fantômes</h4><p>Acompte versé, plus personne. Vous restez sans recours.</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MISSION & VISION (anonyme) -->
-  <section class="section-padding">
-    <div class="container">
-      <div class="row g-4">
-        <div class="col-md-6 reveal"><div class="p-5 bg-white rounded-5 shadow h-100 border-start border-5 border-gold"><i class="fas fa-bullseye fa-4x gold-text mb-3"></i><h3>Notre mission</h3><p class="fs-5">Sécuriser chaque transaction automobile grâce à une inspection indépendante, sans conflit d'intérêt.</p></div></div>
-        <div class="col-md-6 reveal"><div class="p-5 bg-white rounded-5 shadow h-100 border-start border-5 border-gold"><i class="fas fa-eye fa-4x gold-text mb-3"></i><h3>Notre vision</h3><p class="fs-5">Devenir le standard de confiance pour l'achat de véhicules d'occasion en Afrique et pour la diaspora.</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMMENT ÇA MARCHE (étapes claires) -->
-  <section class="bg-bleu text-white section-padding" id="process">
-    <div class="container">
-      <h2 class="text-center text-white reveal">Notre processus en 3 actes</h2>
-      <div class="border-gold-bottom"></div>
-      <div class="row mt-5 g-4">
-        <div class="col-lg-4 reveal"><div class="p-5 bg-white text-dark rounded-5 h-100"><span class="display-1 fw-bold gold-text opacity-50">1</span><h4 class="mt-3">Vous définissez votre budget et modèle</h4><p>On recherche les meilleures annonces et on pré-sélectionne 3 à 5 véhicules.</p></div></div>
-        <div class="col-lg-4 reveal"><div class="p-5 bg-white text-dark rounded-5 h-100"><span class="display-1 fw-bold gold-text opacity-50">2</span><h4 class="mt-3">Inspection technique 48h</h4><p>Moteur, boîte, électronique, châssis, essai routier – rapport photo/vidéo.</p></div></div>
-        <div class="col-lg-4 reveal"><div class="p-5 bg-white text-dark rounded-5 h-100"><span class="display-1 fw-bold gold-text opacity-50">3</span><h4 class="mt-3">Achat sécurisé + garantie</h4><p>Vous validez, nous négocions et finalisons. Garantie 1 mois incluse.</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES DÉTAILLÉS (cartes interactives) -->
-  <section class="section-padding" id="services">
-    <div class="container">
-      <h2 class="text-center reveal">Nos services transparents</h2>
-      <div class="border-gold-bottom"></div>
-      <div class="row mt-5 g-4">
-        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-magnifying-glass-dollar card-icon"></i><h4>Recherche personnalisée</h4><p>Sourcing selon critères stricts, 0 frais sans achat.</p><a href="https://wa.me/243860122112?text=Recherche%20véhicule" target="_blank" class="btn btn-outline-gold mt-3">Demander</a></div></div>
-        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-clipboard-list card-icon"></i><h4>Inspection 48h</h4><p>Vérification complète par mécanicien diplômé.</p><a href="https://wa.me/243860122112?text=Inspection%20auto" target="_blank" class="btn btn-outline-gold mt-3">Réserver</a></div></div>
-        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-hand-peace card-icon"></i><h4>Achat local - 5%</h4><p>Accompagnement total, négociation, paperasse.</p><a href="https://wa.me/243860122112?text=Accompagnement%20achat%20local" target="_blank" class="btn btn-outline-gold mt-3">+ d'infos</a></div></div>
-        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-ship card-icon"></i><h4>Importation - 10%</h4><p>Depuis l'étranger, inspection incluse avant expédition.</p><a href="https://wa.me/243860122112?text=Importation%20véhicule" target="_blank" class="btn btn-outline-gold mt-3">Simuler</a></div></div>
-        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-truck-fast card-icon"></i><h4>Livraison 100$</h4><p>Véhicule livré chez vous après achat (sous conditions).</p><a href="https://wa.me/243860122112?text=Livraison%20auto" target="_blank" class="btn btn-outline-gold mt-3">Planifier</a></div></div>
-        <div class="col-md-4 reveal"><div class="hover-card"><i class="fas fa-shield-heart card-icon"></i><h4>Garantie 1 mois</h4><p>Moteur, boîte, transmission. Possibilité d'extension.</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== QUIZ ULTRA COMPLET 10 QUESTIONS ========== -->
-  <section class="section-padding bg-bleu" id="quiz">
-    <div class="container">
-      <div class="quiz-master reveal">
-        <div class="quiz-header">
-          <i class="fas fa-brain fa-4x gold-text mb-3"></i>
-          <h2>AutoQuiz : êtes-vous incollable ?</h2>
-          <p class="fs-4 text-white-50">10 questions · Répondez et obtenez votre profil d'acheteur</p>
-        </div>
-
-        <!-- Conteneur des questions dynamiques -->
-        <div id="quizContainer"></div>
-
-        <!-- Bouton principal du quiz -->
-        <div class="text-center mt-4">
-          <button id="quizNextBtn" class="btn btn-gold btn-lg px-5 py-3" onclick="handleQuizNext()">Démarrer le quiz</button>
-        </div>
-
-        <!-- Résultat et corrections -->
-        <div id="quizResultBox" class="quiz-result-box" style="display: none;"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- POURQUOI NOUS FAIRE CONFIANCE (4 piliers) -->
-  <section class="section-padding" id="confiance">
-    <div class="container">
-      <h2 class="text-center reveal">Pourquoi AutoTrust est différent</h2>
-      <div class="border-gold-bottom"></div>
-      <div class="row mt-5 g-4 text-center">
-        <div class="col-md-3 reveal"><i class="fas fa-scale-balanced fa-3x gold-text"></i><h5 class="mt-3">Indépendance</h5><p>Nous ne vendons pas de voitures, nous les inspectons.</p></div>
-        <div class="col-md-3 reveal"><i class="fas fa-microchip fa-3x gold-text"></i><h5 class="mt-3">Expertise technique</h5><p>Mécaniciens aguerris, outils de diagnostic.</p></div>
-        <div class="col-md-3 reveal"><i class="fas fa-file-lines fa-3x gold-text"></i><h5 class="mt-3">Rapport détaillé</h5><p>Photos, vidéos, commentaires clairs.</p></div>
-        <div class="col-md-3 reveal"><i class="fas fa-gavel fa-3x gold-text"></i><h5 class="mt-3">Garantie contractuelle</h5><p>1 mois sur les organes majeurs.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- AVANTAGES DIASPORA & LOCAUX -->
-  <section class="bg-bleu text-white section-padding">
+  <!-- SECTION EXPLICATION DU SERVICE (courtage détaillé) -->
+  <section class="section-padding" id="courtier" style="background:#fafcff;">
     <div class="container">
       <div class="row g-5 align-items-center">
-        <div class="col-md-6 reveal"><i class="fas fa-earth-europe fa-4x gold-text"></i><h3 class="text-white mt-3">Vous vivez à l'étranger ?</h3><p class="fs-5">On devient vos yeux et vos mains sur place. Inspection filmée, achat, export.</p></div>
-        <div class="col-md-6 reveal"><i class="fas fa-location-dot fa-4x gold-text"></i><h3 class="text-white mt-3">Client local ?</h3><p class="fs-5">On vous fait gagner du temps et surtout vous évite des pièges à l'achat.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ENGAGEMENT ÉTHIQUE (anonyme) -->
-  <section class="section-padding text-center">
-    <div class="container reveal">
-      <i class="fas fa-hand-holding-heart fa-5x gold-text mb-4"></i>
-      <h2>Notre engagement éthique</h2>
-      <p class="fs-4 col-lg-8 mx-auto">Nous refusons une voiture si elle est dangereuse ou surcotée. Votre sécurité prime sur notre commission.</p>
-    </div>
-  </section>
-
-  <!-- FAQ Compacte -->
-  <section class="bg-light section-padding">
-    <div class="container">
-      <h2 class="text-center reveal">FAQ - les 3 questions les plus fréquentes</h2>
-      <div class="border-gold-bottom"></div>
-      <div class="row mt-5 justify-content-center">
-        <div class="col-lg-8">
-          <div class="accordion" id="faqAccordion">
-            <div class="accordion-item reveal"><h2 class="accordion-header"><button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#f1">Que faire si je suis diaspora ?</button></h2><div id="f1" class="accordion-collapse collapse show"><div class="accordion-body">On agit pour vous : recherche, inspection filmée, achat, formalités export. Vous recevez une vidéo complète.</div></div></div>
-            <div class="accordion-item reveal"><h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f2">La garantie d’un mois, c’est sérieux ?</button></h2><div id="f2" class="accordion-collapse collapse"><div class="accordion-body">Oui, écrite. Moteur, boîte, pont. En cas de panne couverte, on prend en charge la réparation dans notre réseau.</div></div></div>
-            <div class="accordion-item reveal"><h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f3">Et si le véhicule ne me plaît pas ?</button></h2><div id="f3" class="accordion-collapse collapse"><div class="accordion-body">Vous n'achetez qu'après validation. Si le rapport est négatif ou que vous refusez, on cherche un autre véhicule.</div></div></div>
+        <div class="col-lg-6 reveal">
+          <span class="gold-text text-uppercase fw-semibold">Notre métier</span>
+          <h2 class="mt-2 mb-4">Courtier automobile : votre protecteur d'achat</h2>
+          <p class="fs-5 text-secondary">AutoTrust est un service professionnel de <strong>courtage et d’accompagnement automobile</strong>. Notre mission : aider les particuliers à acheter un véhicule fiable tout en évitant les arnaques et les vices cachés. Trop d'acheteurs se fient à l'apparence ou aux paroles du vendeur, et subissent de lourdes conséquences : moteur défectueux, boîte fragile, véhicule accidenté maquillé, châssis endommagé, documents douteux.</p>
+          <p class="fs-5 text-secondary">AutoTrust a été créé pour mettre fin à ces situations. Nous agissons comme <strong>votre intermédiaire professionnel</strong> à chaque étape : analyse du besoin, recherche sur le marché, inspection technique complète, négociation du prix, sécurisation de la transaction. Vous n'avez plus à courir après les vendeurs ni à prendre de risques.</p>
+          <div class="mt-4 p-4 bg-white rounded-4 shadow-sm">
+            <p class="mb-0"><i class="fas fa-bullseye gold-text me-2"></i><strong>Budget minimum : 5 000 $</strong> – Nous trouvons les meilleures options dans votre gamme de prix.</p>
+          </div>
+        </div>
+        <div class="col-lg-6 reveal">
+          <div class="p-5 bg-bleu text-white rounded-5">
+            <i class="fas fa-magnifying-glass-dollar fa-4x gold-text mb-3"></i>
+            <h3 class="text-white">Notre promesse</h3>
+            <ul class="list-unstyled fs-5">
+              <li class="mb-3"><i class="fas fa-check-circle gold-text me-2"></i> Recherche ciblée selon vos critères</li>
+              <li class="mb-3"><i class="fas fa-check-circle gold-text me-2"></i> Inspection technique avant recommandation</li>
+              <li class="mb-3"><i class="fas fa-check-circle gold-text me-2"></i> Négociation du prix avec le vendeur</li>
+              <li class="mb-3"><i class="fas fa-check-circle gold-text me-2"></i> Aucun véhicule présenté sans validation technique</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TÉMOIGNAGES CLIENTS (simulés, anonymes) -->
-  <section class="section-padding">
+  <!-- TARIFS CLAIRS -->
+  <section class="section-padding bg-bleu text-white" id="services">
     <div class="container">
-      <h2 class="text-center reveal">Ils ont osé nous faire confiance</h2>
+      <h2 class="text-center text-white reveal">Nos honoraires transparents</h2>
+      <div class="border-gold-bottom"></div>
+      <div class="row mt-5 g-4 justify-content-center">
+        <div class="col-md-5 reveal">
+          <div class="p-5 bg-white text-dark rounded-5 h-100 text-center">
+            <i class="fas fa-folder-open fa-4x gold-text mb-3"></i>
+            <h3>Ouverture de dossier</h3>
+            <p class="display-4 fw-bold gold-text">200 <span class="fs-3">$</span></p>
+            <p class="fs-5">Analyse du besoin, recherche des véhicules sur le marché, déplacements, inspections techniques préparatoires.</p>
+          </div>
+        </div>
+        <div class="col-md-5 reveal">
+          <div class="p-5 bg-white text-dark rounded-5 h-100 text-center">
+            <i class="fas fa-file-signature fa-4x gold-text mb-3"></i>
+            <h3>Accompagnement final</h3>
+            <p class="display-4 fw-bold gold-text">120 <span class="fs-3">$</span></p>
+            <p class="fs-5">Si vous achetez le véhicule validé, assistance jusqu'à la conclusion de la transaction.</p>
+          </div>
+        </div>
+      </div>
+      <p class="text-center text-white-50 mt-5 fs-5"><i class="fas fa-info-circle me-2 gold-text"></i>Ces frais couvrent l'ensemble des prestations : recherche, inspection, négociation. Aucun frais caché.</p>
+    </div>
+  </section>
+
+  <!-- PROCESSUS DÉTAILLÉ -->
+  <section class="section-padding" id="process">
+    <div class="container">
+      <h2 class="text-center reveal">Comment nous opérons pour vous</h2>
       <div class="border-gold-bottom"></div>
       <div class="row mt-5 g-4">
-        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow h-100"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Grâce à leur inspection, j’ai évité une épave. Ils m'ont trouvé un SUV parfait." – <strong>Laure B.</strong></p></div></div>
-        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow h-100"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Je vis à Paris, ils ont tout géré à Kinshasa. Voiture livrée conforme." – <strong>Marc K.</strong></p></div></div>
-        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow h-100"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"La garantie moteur d’un mois m’a sauvé 2000€. Merci à toute l’équipe." – <strong>Serge N.</strong></p></div></div>
+        <div class="col-md-4 reveal">
+          <div class="hover-card text-center">
+            <span class="display-1 fw-bold gold-text opacity-25">01</span>
+            <i class="fas fa-headset card-icon"></i>
+            <h4>Contact & budget</h4>
+            <p>Vous nous expliquez le véhicule recherché et votre budget (min. 5 000 $). On analyse le marché.</p>
+          </div>
+        </div>
+        <div class="col-md-4 reveal">
+          <div class="hover-card text-center">
+            <span class="display-1 fw-bold gold-text opacity-25">02</span>
+            <i class="fas fa-search card-icon"></i>
+            <h4>Recherche & inspection</h4>
+            <p>Nous identifions les meilleures options et inspectons chaque véhicule (moteur, boîte, châssis, électronique, essai routier).</p>
+          </div>
+        </div>
+        <div class="col-md-4 reveal">
+          <div class="hover-card text-center">
+            <span class="display-1 fw-bold gold-text opacity-25">03</span>
+            <i class="fas fa-handshake card-icon"></i>
+            <h4>Négociation & achat</h4>
+            <p>Si le véhicule est fiable, on négocie le prix pour vous et on vous assiste jusqu'à la vente finale.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CALL TO ACTION FINAL -->
-  <section class="bg-bleu text-white text-center section-padding">
-    <div class="container reveal">
-      <h2 class="text-white">Arrêtez d'acheter à l'aveugle.</h2>
-      <p class="fs-2 fw-light">1 inspection = des milliers d'économies.</p>
-      <a href="https://wa.me/243860122112?text=Bonjour,%20je%20veux%20être%20sécurisé%20pour%20mon%20achat" target="_blank" class="btn btn-gold btn-lg px-5 py-3 mt-3"><i class="fab fa-whatsapp me-2"></i>Contactez-nous maintenant</a>
+  <!-- QUIZ AVEC MINUTERIE 12 SECONDES PAR QUESTION -->
+  <section class="section-padding bg-bleu" id="quiz">
+    <div class="container">
+      <div class="quiz-master reveal">
+        <div class="quiz-header">
+          <i class="fas fa-clock fa-4x gold-text mb-3"></i>
+          <h2>Quiz éclair – 12 secondes par question</h2>
+          <p class="fs-4 text-white-50">Testez vos connaissances en achat auto. Chrono inclus.</p>
+        </div>
+
+        <!-- Timer et affichage question -->
+        <div id="timerDisplay" class="timer-badge">12s</div>
+        <div id="quizContainer"></div>
+
+        <!-- Bouton contrôle -->
+        <div class="text-center mt-4">
+          <button id="quizNextBtn" class="btn btn-gold btn-lg px-5 py-3" onclick="handleQuizNext()">Démarrer le quiz</button>
+        </div>
+
+        <!-- Résultat final -->
+        <div id="quizResultBox" class="quiz-result-box" style="display: none;"></div>
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER (sans nom de fondateur) -->
+  <!-- POURQUOI NOUS FAIRE CONFIANCE -->
+  <section class="section-padding" id="confiance">
+    <div class="container">
+      <h2 class="text-center reveal">Pourquoi choisir AutoTrust ?</h2>
+      <div class="border-gold-bottom"></div>
+      <div class="row mt-5 g-4 text-center">
+        <div class="col-md-3 reveal"><i class="fas fa-scale-balanced fa-3x gold-text"></i><h5 class="mt-3">Indépendance totale</h5><p>Nous ne vendons pas de voitures, nous vous conseillons.</p></div>
+        <div class="col-md-3 reveal"><i class="fas fa-microchip fa-3x gold-text"></i><h5 class="mt-3">Inspection experte</h5><p>Mécaniciens expérimentés, diagnostic complet.</p></div>
+        <div class="col-md-3 reveal"><i class="fas fa-file-lines fa-3x gold-text"></i><h5 class="mt-3">Rapport détaillé</h5><p>Photos, vidéos, commentaires techniques.</p></div>
+        <div class="col-md-3 reveal"><i class="fas fa-sack-dollar fa-3x gold-text"></i><h5 class="mt-3">Économies garanties</h5><p>Notre négociation vous fait souvent gagner plus que nos frais.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TÉMOIGNAGES CLIENTS -->
+  <section class="bg-light section-padding">
+    <div class="container">
+      <h2 class="text-center reveal">Ils ont sécurisé leur achat</h2>
+      <div class="border-gold-bottom"></div>
+      <div class="row mt-5 g-4">
+        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow h-100"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Grâce à AutoTrust, j'ai évité une épave. Leur inspection a révélé des dégâts cachés." – <strong>Patrick M.</strong></p></div></div>
+        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow h-100"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Courtier honnête, ils ont négocié 800$ de moins que le prix affiché." – <strong>Sophie K.</strong></p></div></div>
+        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow h-100"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Je ne connaissais rien aux voitures, ils ont tout géré. Achat serein." – <strong>Jean-Paul D.</strong></p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPEL À L'ACTION FINAL -->
+  <section class="bg-bleu text-white text-center section-padding">
+    <div class="container reveal">
+      <h2 class="text-white">Prêt à acheter en toute sécurité ?</h2>
+      <p class="fs-2 fw-light">200$ pour lancer votre dossier. Contactez-nous.</p>
+      <a href="https://wa.me/243860122112?text=Bonjour,%20je%20veux%20ouvrir%20un%20dossier%20de%20courtage%20auto" target="_blank" class="btn btn-gold btn-lg px-5 py-3 mt-3"><i class="fab fa-whatsapp me-2"></i>Contacter un courtier</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="row gy-4">
         <div class="col-md-5">
           <h3 class="text-white">Auto<span class="gold-text">Trust</span></h3>
-          <p>© AutoTrust – Tous droits réservés. Créé par une équipe d’experts indépendants.</p>
+          <p>© AutoTrust – Tous droits réservés. Courtage automobile professionnel.</p>
         </div>
         <div class="col-md-4">
-          <h5>Liens utiles</h5>
+          <h5>Liens</h5>
           <ul class="list-unstyled">
-            <li><a href="#probleme">Le problème</a></li>
-            <li><a href="#services">Services</a></li>
+            <li><a href="#courtier">Mission</a></li>
+            <li><a href="#services">Tarifs</a></li>
+            <li><a href="#process">Processus</a></li>
             <li><a href="#quiz">Quiz</a></li>
-            <li><a href="#confiance">Pourquoi nous</a></li>
           </ul>
         </div>
         <div class="col-md-3">
@@ -522,10 +536,10 @@
     </div>
   </footer>
 
-  <!-- SCRIPTS : Bootstrap + Quiz + Intro + Reveal -->
+  <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // ---------- INTRO SPLASH 7 secondes ----------
+    // INTRO SPLASH 7 secondes
     window.addEventListener('load', function() {
       setTimeout(() => {
         document.getElementById('intro-splash').style.opacity = '0';
@@ -535,7 +549,7 @@
       }, 7000);
     });
 
-    // ---------- REVEAL SCROLL ----------
+    // REVEAL SCROLL
     const revealElements = document.querySelectorAll('.reveal');
     function updateReveal() {
       const windowHeight = window.innerHeight;
@@ -548,26 +562,59 @@
     window.addEventListener('scroll', updateReveal);
     window.addEventListener('load', updateReveal);
 
-    // ---------- QUIZ COMPLET 10 QUESTIONS ----------
+    // ---------- QUIZ AVEC TIMER 12s ----------
     const quizQuestions = [
-      { question: "Que vérifier en priorité sur une voiture d'occasion ?", options: ["La couleur", "L'historique d'entretien et l'état moteur", "Les enjoliveurs", "L'état des tapis"], correct: 1, explanation: "L'historique d'entretien révèle les vrais problèmes mécaniques." },
-      { question: "Pourquoi un acheteur devrait-il faire appel à un service comme AutoTrust ?", options: ["Pour payer plus cher", "Pour éviter les vices cachés et arnaques", "Pour avoir un cafe", "Pour ralentir la vente"], correct: 1, explanation: "Un expert indépendant détecte ce que vous ne voyez pas." },
-      { question: "Que signifie un certificat de non-gage ?", options: ["Que la voiture n'est pas gagée", "Que le vendeur est honnête", "Que le moteur est bon", "Que le prix est négociable"], correct: 0, explanation: "Il garantit l'absence de créance sur le véhicule." },
-      { question: "Quel est l'avantage d'une inspection pré-achat ?", options: ["Perdre du temps", "Détecter des défauts cachés", "Augmenter le prix", "Faire plaisir au vendeur"], correct: 1, explanation: "L'inspection protège votre achat." },
-      { question: "Quand doit-on essayer une voiture ?", options: ["Jamais", "Uniquement sur autoroute", "Sur route variée pour sentir boîte, embrayage, bruits", "Dans une cage à rouleaux"], correct: 2, explanation: "L'essai routier révèle des anomalies invisibles à l'arrêt." },
-      { question: "Pourquoi la diaspora a-t-elle besoin d'un service comme AutoTrust ?", options: ["Pour payer plus de taxes", "Pour avoir un intermédiaire fiable sur place", "Parce que c'est tendance", "Pour envoyer de l'argent"], correct: 1, explanation: "Un correspondant local sérieux remplace votre absence." },
-      { question: "Quelle est la commission pour un achat local accompagné ?", options: ["15%", "5%", "10%", "20%"], correct: 1, explanation: "AutoTrust facture 5% du prix d'achat pour l'accompagnement local." },
-      { question: "Que faire si le vendeur demande un acompte urgent ?", options: ["Accepter immédiatement", "Demander des garanties et contacter AutoTrust", "Payer en liquide", "Ignorer"], correct: 1, explanation: "L'urgence est souvent un signe d'arnaque." },
-      { question: "Quel élément est généralement inspecté lors d'une check-list professionnelle ?", options: ["Moteur, boîte, châssis, électronique", "La couleur des sièges", "Le porte-clés", "La marque des pneus"], correct: 0, explanation: "Les points critiques sont mécaniques et structurels." },
-      { question: "Que fait AutoTrust si le véhicule est dangereux ?", options: ["On le vend quand même", "On vous conseille de ne pas l'acheter", "On augmente la garantie", "On le répare nous-mêmes"], correct: 1, explanation: "Notre éthique : refuser les voitures à risque." }
+      { question: "Quel est le premier réflexe à avoir avant d'acheter une voiture d'occasion ?", options: ["Vérifier la couleur", "Demander l'historique d'entretien et faire inspecter", "Regarder les pneus", "Écouter la radio"], correct: 1, explanation: "L'historique d'entretien et une inspection technique sont essentiels pour détecter les vices cachés." },
+      { question: "Pourquoi faire appel à un courtier comme AutoTrust ?", options: ["Pour payer plus cher", "Pour bénéficier d'une recherche, inspection et négociation pro", "Pour ralentir le processus", "Pour avoir un tampon"], correct: 1, explanation: "Un courtier indépendant vous protège et vous fait gagner du temps et de l'argent." },
+      { question: "Que signifie un certificat de non-gage ?", options: ["Que la voiture n'est pas volée ni gagée", "Que le moteur est garanti", "Que le vendeur est sérieux", "Que le prix est bas"], correct: 0, explanation: "Il garantit l'absence de créance ou d'opposition sur le véhicule." },
+      { question: "Quel est le budget minimum pour utiliser AutoTrust ?", options: ["1 000 $", "5 000 $", "10 000 $", "Pas de minimum"], correct: 1, explanation: "Nous travaillons à partir de 5 000 $, afin d'assurer une prestation de qualité." },
+      { question: "Quels sont les frais d'ouverture de dossier ?", options: ["50 $", "200 $", "300 $", "Gratuit"], correct: 1, explanation: "200 $ pour l'analyse, la recherche et les inspections préparatoires." },
+      { question: "Que se passe-t-il après l'inspection si le véhicule est bon ?", options: ["On vous le recommande et on négocie", "On l'achète sans vous demander", "On augmente le prix", "On garde l'info"], correct: 0, explanation: "Notre rôle est de vous recommander les bons véhicules et d'obtenir le meilleur prix." },
+      { question: "Que fait AutoTrust si le véhicule est dangereux ?", options: ["On le vend quand même", "On vous conseille de ne pas l'acheter", "On le répare nous-mêmes", "On ignore"], correct: 1, explanation: "Notre éthique : ne jamais recommander un véhicule risqué." },
+      { question: "Quel est le tarif d'accompagnement final si vous achetez ?", options: ["120 $", "200 $", "80 $", "250 $"], correct: 0, explanation: "120 $ pour l'assistance jusqu'à la conclusion de la transaction." },
+      { question: "L'inspection technique effectuée par AutoTrust inclut-elle un essai routier ?", options: ["Non", "Oui, toujours", "Uniquement sur demande", "Seulement pour les voitures chères"], correct: 1, explanation: "L'essai routier fait partie intégrante de notre inspection." },
+      { question: "Pourquoi les vendeurs acceptent-ils mieux la négociation avec AutoTrust ?", options: ["Parce qu'on est plus nombreux", "Parce qu'ils savent qu'on détecte les défauts", "Parce qu'on paie cash", "Aucune raison"], correct: 1, explanation: "Notre expertise technique nous donne un levier de négociation important." }
     ];
 
     let currentIdx = 0;
     let answers = new Array(quizQuestions.length).fill(null);
     let quizActive = false;
+    let timerInterval = null;
+    let timeLeft = 12;
     const quizContainer = document.getElementById('quizContainer');
     const quizNextBtn = document.getElementById('quizNextBtn');
     const quizResultDiv = document.getElementById('quizResultBox');
+    const timerDisplay = document.getElementById('timerDisplay');
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function startTimerForCurrentQuestion() {
+      stopTimer();
+      timeLeft = 12;
+      timerDisplay.textContent = timeLeft + 's';
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = timeLeft + 's';
+        if (timeLeft <= 0) {
+          stopTimer();
+          // Si le temps est écoulé, on passe automatiquement à la suivante
+          if (quizActive && currentIdx < quizQuestions.length - 1) {
+            // Aucune réponse n'est enregistrée pour cette question (null)
+            currentIdx++;
+            displayQuestion(currentIdx);
+          } else if (quizActive && currentIdx === quizQuestions.length - 1) {
+            // Dernière question, on arrête le timer et on affiche les résultats
+            stopTimer();
+            computeQuizResults();
+          }
+        }
+      }, 1000);
+    }
 
     function displayQuestion(index) {
       if (!quizActive) return;
@@ -585,11 +632,12 @@
       } else {
         quizNextBtn.textContent = 'Question suivante →';
       }
+      startTimerForCurrentQuestion();
     }
 
     window.selectQuizAnswer = function(qIdx, optIdx) {
       answers[qIdx] = optIdx;
-      displayQuestion(currentIdx); // re-rend pour mise à jour visuelle
+      displayQuestion(currentIdx); // met à jour l'affichage de la sélection
     };
 
     window.handleQuizNext = function() {
@@ -611,30 +659,26 @@
         displayQuestion(0);
         return;
       }
-      // Vérifier réponse ? On peut passer sans réponse mais on tolère null
-      // (pas de blocage pour fluidité, mais on signale si on veut)
-      if (answers[currentIdx] === null) {
-        if (!confirm("Vous n'avez pas répondu à cette question. Continuer quand même ?")) return;
-      }
+      // Arrêter le timer avant de passer à la suite
+      stopTimer();
       if (currentIdx < quizQuestions.length - 1) {
         currentIdx++;
         displayQuestion(currentIdx);
       } else {
-        // Fin du quiz, afficher résultats
-        quizContainer.innerHTML = ''; // nettoie
-        quizNextBtn.textContent = '⟲ Refaire le quiz';
         computeQuizResults();
       }
     };
 
     function computeQuizResults() {
+      stopTimer();
+      timerDisplay.textContent = '12s'; // reset
       let correctCount = 0;
       let explanations = '';
       quizQuestions.forEach((q, idx) => {
         const userChoice = answers[idx];
         const isCorrect = (userChoice === q.correct);
         if (isCorrect) correctCount++;
-        const userAnsText = (userChoice !== null) ? q.options[userChoice] : "(non répondu)";
+        const userAnsText = (userChoice !== null) ? q.options[userChoice] : "(temps écoulé)";
         const correctText = q.options[q.correct];
         explanations += `<div class="explain-item"><strong>${idx+1}. ${q.question}</strong><br>${isCorrect ? '✅' : '❌'} Votre réponse : ${userAnsText}<br><span class="gold-text fw-semibold">✔ Réponse correcte : ${correctText}</span><br><small>${q.explanation}</small></div>`;
       });
@@ -642,12 +686,14 @@
       if (correctCount <= 3) profileMsg = "🔴 Vous êtes très exposé aux risques. Laissez des experts vous guider.";
       else if (correctCount <= 7) profileMsg = "🟡 Bonnes bases, mais quelques angles morts. AutoTrust vous couvre.";
       else profileMsg = "🟢 Excellent niveau ! Même les pros utilisent AutoTrust pour gagner du temps.";
-      quizResultDiv.innerHTML = `<h3><i class="fas fa-clipboard-check me-2 gold-text"></i> Résultat : ${correctCount}/10</h3><p class="fs-4 fw-light">${profileMsg}</p>${explanations}<div class="text-center mt-4"><a href="https://wa.me/243860122112?text=Bonjour,%20j'ai%20fait%20le%20quiz%20et%20je%20veux%20parler%20à%20un%20expert" target="_blank" class="btn btn-gold py-3 px-5"><i class="fab fa-whatsapp me-2"></i>Discuter de mes résultats</a></div>`;
+      quizResultDiv.innerHTML = `<h3><i class="fas fa-clipboard-check me-2 gold-text"></i> Résultat : ${correctCount}/10</h3><p class="fs-4 fw-light">${profileMsg}</p>${explanations}<div class="text-center mt-4"><a href="https://wa.me/243860122112?text=Bonjour,%20j'ai%20fait%20le%20quiz%20chrono%20et%20je%20veux%20parler%20à%20un%20courtier" target="_blank" class="btn btn-gold py-3 px-5"><i class="fab fa-whatsapp me-2"></i>Discuter de mes résultats</a></div>`;
       quizResultDiv.style.display = 'block';
-      currentIdx = quizQuestions.length; // état fini
+      quizContainer.innerHTML = ''; // nettoie
+      quizNextBtn.textContent = '⟲ Refaire le quiz';
+      currentIdx = quizQuestions.length; // marque la fin
     }
 
-    // Smooth scroll for anchor links
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
