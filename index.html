@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutoTrust – Courtage auto & facturation sécurisée</title>
-  <!-- Bootstrap 5 + Icons + Fonts -->
+  <title>AutoTrust – Courtage & facturation • Contrats sécurisés</title>
+  <!-- Bootstrap 5, Icons, Fonts -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet">
-  <!-- html2pdf (pour export PDF) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- jsPDF pour l'export PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- html2canvas pour capture PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     /* ========== RESET & VARIABLES ========== */
     * {
@@ -158,7 +160,7 @@
       color: var(--dore);
       margin-bottom: 1.5rem;
     }
-    /* ========== QUIZ AVEC MINUTERIE 12s ========== */
+    /* ========== QUIZ TIMER ========== */
     .quiz-master {
       background: radial-gradient(circle at 10% 30%, #12314f, #0a1a2b);
       border-radius: 70px 70px 40px 40px;
@@ -243,91 +245,64 @@
       margin: 15px 0;
       border-left: 8px solid var(--dore);
     }
-    /* ========== SECTIONS CONTRAT & FACTURE ========== */
-    .password-protect {
-      background: #f8f9fc;
+    /* ========== ESPACE CONTRAT / PASSWORD ========== */
+    .contract-section {
+      background: #f8fafd;
+      border-radius: 50px;
+      padding: 50px;
+      margin: 50px 0;
+      box-shadow: var(--shadow-xl);
+    }
+    .password-modal {
+      background: white;
       border-radius: 40px;
-      padding: 30px;
-      text-align: center;
+      padding: 40px;
       max-width: 500px;
-      margin: 0 auto 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin: 0 auto;
+      text-align: center;
       border: 2px solid var(--dore);
     }
-    .password-protect input {
-      width: 100%;
-      padding: 15px;
-      border-radius: 50px;
+    .password-input {
+      border-radius: 40px;
+      padding: 15px 25px;
       border: 1px solid #ccc;
-      margin: 15px 0;
+      width: 100%;
+      margin: 20px 0;
       font-size: 1.2rem;
     }
-    .contrat-section, .facture-section {
-      transition: opacity 0.5s;
-    }
-    .contrat-section {
+    .contract-area {
       background: white;
-      border-radius: 50px;
+      border-radius: 40px;
       padding: 40px;
-      box-shadow: var(--shadow-xl);
-      margin-bottom: 40px;
+      margin-top: 30px;
     }
-    .form-control, .form-select {
-      border-radius: 30px;
-      padding: 12px 20px;
-      border: 1px solid #ced4da;
-      margin-bottom: 15px;
-    }
-    .form-control:focus, .form-select:focus {
-      border-color: var(--dore);
-      box-shadow: 0 0 0 0.2rem rgba(198,164,63,0.25);
-    }
-    .facture-section {
+    .invoice-card {
       background: white;
-      border-radius: 50px;
-      padding: 40px;
-      box-shadow: var(--shadow-xl);
-      border: 2px solid var(--dore-light);
-    }
-    #factureApercu {
-      background: #f9f9f9;
       border-radius: 30px;
-      padding: 25px;
+      padding: 30px;
       margin: 20px 0;
-      font-family: 'Courier New', monospace;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
-    .facture-row {
+    .share-buttons {
       display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px dashed #ddd;
-    }
-    .facture-total {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--dore);
-      text-align: right;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-top: 20px;
     }
     .btn-share {
-      background: #25D366;
-      color: white;
-      border: none;
       border-radius: 50px;
       padding: 12px 25px;
-      margin: 5px;
+      font-weight: 600;
+      border: none;
       transition: 0.2s;
     }
     .btn-share:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
+      transform: translateY(-3px);
     }
-    .btn-pdf {
-      background: #dc3545;
-      color: white;
-      border-radius: 50px;
-      padding: 12px 25px;
-    }
+    .btn-wa-share { background: #25D366; color: white; }
+    .btn-fb-share { background: #1877F2; color: white; }
+    .btn-email-share { background: #EA4335; color: white; }
+    .btn-pdf { background: #dc3545; color: white; }
     /* ========== REVEAL SCROLL ========== */
     .reveal {
       opacity: 0;
@@ -375,11 +350,21 @@
     .footer a:hover {
       color: var(--dore);
     }
+    .admin-link {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      cursor: pointer;
+    }
+    .admin-link:hover {
+      opacity: 1;
+      color: var(--dore);
+    }
     /* ========== RESPONSIVE ========== */
     @media (max-width: 768px) {
       h2 { font-size: 2.4rem; }
       .splash-content h1 { font-size: 3.5rem; }
       .quiz-master { padding: 30px 20px; }
+      .contract-section { padding: 30px 20px; }
     }
   </style>
 </head>
@@ -390,8 +375,8 @@
       <h1><span class="gold-text">Auto</span>Trust</h1>
       <div class="splash-message">
         <i class="fas fa-shield-halded fa-3x gold-text mb-3"></i>
-        <p class="fs-2 fw-semibold">Votre courtier automobile indépendant.<br>On inspecte, on négocie, on sécurise.</p>
-        <p class="opacity-75 fs-5"><i class="fas fa-check-circle gold-text me-2"></i>Dès 5000$ de budget • 200$ ouverture dossier • 120$ accompagnement final</p>
+        <p class="fs-2 fw-semibold">Votre courtier automobile indépendant.<br>Contrats & facturation sécurisés.</p>
+        <p class="opacity-75 fs-5"><i class="fas fa-check-circle gold-text me-2"></i>Dès 5000$ • 200$ dossier • 120$ accompagnement</p>
       </div>
       <div class="spinner-grow text-warning mt-4" style="width: 3rem; height: 3rem;"></div>
     </div>
@@ -409,11 +394,11 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
         <ul class="navbar-nav align-items-center">
-          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#courtier">Mission</a></li>
-          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#services">Tarifs</a></li>
+          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#courtier">Notre mission</a></li>
+          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#services">Services & tarifs</a></li>
           <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#process">Processus</a></li>
           <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#quiz">Quiz chrono</a></li>
-          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#contrat">Contrat & facture</a></li>
+          <li class="nav-item"><a class="nav-link px-3 fw-medium" href="#confiance">Pourquoi nous</a></li>
           <li class="nav-item ms-lg-3">
             <a class="btn btn-gold py-2 px-4" href="https://wa.me/243860122112?text=Bonjour%20équipe%20AutoTrust" target="_blank"><i class="fab fa-whatsapp me-2"></i>Contact</a>
           </li>
@@ -427,12 +412,12 @@
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-lg-7 reveal">
-          <span class="badge bg-gold text-dark px-4 py-2 fs-6 mb-4"><i class="fas fa-handshake me-2"></i>COURTIER AUTOMOBILE INDÉPENDANT</span>
-          <h1 class="display-3 fw-bolder lh-1">Vous voulez une voiture fiable sans vous faire arnaquer ? <span class="gold-text">On s'occupe de tout.</span></h1>
-          <p class="fs-4 my-4 text-white-70">Recherche personnalisée, inspection complète, négociation et accompagnement jusqu'à l'achat. Budget dès 5 000 $.</p>
+          <span class="badge bg-gold text-dark px-4 py-2 fs-6 mb-4"><i class="fas fa-file-signature me-2"></i>CONTRATS & FACTURATION INCLUS</span>
+          <h1 class="display-3 fw-bolder lh-1">Achetez votre voiture en toute sécurité avec <span class="gold-text">un courtier professionnel</span></h1>
+          <p class="fs-4 my-4 text-white-70">Recherche, inspection complète, négociation et accompagnement. Budget dès 5 000 $.</p>
           <div class="d-flex flex-wrap gap-3">
-            <a href="#quiz" class="btn btn-gold btn-lg px-5 py-3"><i class="fas fa-hourglass-half me-2"></i>Quiz minute (12s par question)</a>
-            <a href="https://wa.me/243860122112?text=Bonjour,%20je%20souhaite%20être%20accompagné%20pour%20l'achat%20d'un%20véhicule" target="_blank" class="btn btn-outline-gold btn-lg px-5 py-3"><i class="fab fa-whatsapp me-2"></i>Parler à un courtier</a>
+            <a href="#quiz" class="btn btn-gold btn-lg px-5 py-3"><i class="fas fa-hourglass-half me-2"></i>Quiz minute (12s)</a>
+            <a href="#contract-section" class="btn btn-outline-gold btn-lg px-5 py-3"><i class="fas fa-file-contract me-2"></i>Gérer un contrat</a>
           </div>
           <div class="mt-5 d-flex gap-4 flex-wrap text-white-50">
             <span><i class="fas fa-check-circle gold-text me-1"></i> 200$ ouverture dossier</span>
@@ -441,13 +426,13 @@
           </div>
         </div>
         <div class="col-lg-5 d-none d-lg-block text-end reveal">
-          <i class="fas fa-car-side fa-8x gold-text opacity-50" style="filter: drop-shadow(0 0 20px #C6A43F);"></i>
+          <i class="fas fa-file-invoice fa-8x gold-text opacity-50" style="filter: drop-shadow(0 0 20px #C6A43F);"></i>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECTION MISSION -->
+  <!-- SECTION MISSION COURTAGE -->
   <section class="section-padding" id="courtier" style="background:#fafcff;">
     <div class="container">
       <div class="row g-5 align-items-center">
@@ -459,13 +444,9 @@
         </div>
         <div class="col-lg-6 reveal">
           <div class="p-5 bg-bleu text-white rounded-5">
-            <i class="fas fa-magnifying-glass-dollar fa-4x gold-text mb-3"></i>
-            <h3 class="text-white">Notre promesse</h3>
-            <ul class="list-unstyled fs-5">
-              <li class="mb-3"><i class="fas fa-check-circle gold-text me-2"></i> Recherche ciblée selon vos critères</li>
-              <li class="mb-3"><i class="fas fa-check-circle gold-text me-2"></i> Inspection technique avant recommandation</li>
-              <li class="mb-3"><i class="fas fa-check-circle gold-text me-2"></i> Négociation du prix avec le vendeur</li>
-            </ul>
+            <i class="fas fa-file-signature fa-4x gold-text mb-3"></i>
+            <h3 class="text-white">Contrats transparents</h3>
+            <p>Tous nos mandats sont formalisés par un contrat de courtage détaillant nos missions et vos droits.</p>
           </div>
         </div>
       </div>
@@ -483,33 +464,22 @@
             <i class="fas fa-folder-open fa-4x gold-text mb-3"></i>
             <h3>Ouverture de dossier</h3>
             <p class="display-4 fw-bold gold-text">200 <span class="fs-3">$</span></p>
+            <p class="fs-5">Recherche, déplacements, inspections préparatoires.</p>
           </div>
         </div>
         <div class="col-md-5 reveal">
           <div class="p-5 bg-white text-dark rounded-5 h-100 text-center">
-            <i class="fas fa-file-signature fa-4x gold-text mb-3"></i>
+            <i class="fas fa-handshake fa-4x gold-text mb-3"></i>
             <h3>Accompagnement final</h3>
             <p class="display-4 fw-bold gold-text">120 <span class="fs-3">$</span></p>
+            <p class="fs-5">Si achat conclu, assistance jusqu'à la vente.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROCESSUS -->
-  <section class="section-padding" id="process">
-    <div class="container">
-      <h2 class="text-center reveal">Comment nous opérons pour vous</h2>
-      <div class="border-gold-bottom"></div>
-      <div class="row mt-5 g-4">
-        <div class="col-md-4 reveal"><div class="hover-card text-center"><span class="display-1 fw-bold gold-text opacity-25">01</span><i class="fas fa-headset card-icon"></i><h4>Contact & budget</h4><p>Vous expliquez votre besoin et budget (min. 5 000 $).</p></div></div>
-        <div class="col-md-4 reveal"><div class="hover-card text-center"><span class="display-1 fw-bold gold-text opacity-25">02</span><i class="fas fa-search card-icon"></i><h4>Recherche & inspection</h4><p>On inspecte chaque véhicule avant de vous le recommander.</p></div></div>
-        <div class="col-md-4 reveal"><div class="hover-card text-center"><span class="display-1 fw-bold gold-text opacity-25">03</span><i class="fas fa-handshake card-icon"></i><h4>Négociation & achat</h4><p>On négocie le prix et on vous assiste jusqu'à la vente.</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- QUIZ CHRONO -->
+  <!-- QUIZ AVEC TIMER 12s -->
   <section class="section-padding bg-bleu" id="quiz">
     <div class="container">
       <div class="quiz-master reveal">
@@ -528,107 +498,113 @@
     </div>
   </section>
 
-  <!-- ========== NOUVELLE SECTION CONTRAT & FACTURE ========== -->
-  <section class="section-padding" id="contrat">
+  <!-- ========== SECTION CONTRAT PROTÉGÉ PAR MOT DE PASSE ========== -->
+  <section class="section-padding" id="contract-section">
     <div class="container">
-      <h2 class="text-center reveal">Gestion des contrats & facturation</h2>
-      <div class="border-gold-bottom"></div>
-
-      <!-- Bloc mot de passe -->
-      <div class="password-protect reveal" id="passwordBlock">
-        <i class="fas fa-lock fa-3x gold-text mb-3"></i>
-        <h4>Espace sécurisé</h4>
-        <p>Veuillez entrer le mot de passe pour accéder aux contrats et à la facturation.</p>
-        <input type="password" id="passwordInput" placeholder="Mot de passe" class="form-control">
-        <button class="btn btn-gold" onclick="checkPassword()">Déverrouiller</button>
-        <p id="passwordError" class="text-danger mt-2"></p>
-      </div>
-
-      <!-- Contenu protégé (caché par défaut) -->
-      <div id="protectedContent" style="display: none;">
-        <!-- SECTION CONTRAT (formulaires) -->
-        <div class="contrat-section reveal">
-          <h3 class="mb-4"><i class="fas fa-file-contract gold-text me-2"></i> Formulaire de contrat de courtage</h3>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="form-label">Nom complet</label>
-              <input type="text" class="form-control" id="clientNom" placeholder="Jean Dupont">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-control" id="clientEmail" placeholder="jean@example.com">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Téléphone</label>
-              <input type="tel" class="form-control" id="clientTel" placeholder="+243 860 122 112">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Modèle de véhicule recherché</label>
-              <input type="text" class="form-control" id="vehiculeModele" placeholder="Toyota RAV4, 2018...">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Budget maximum ($)</label>
-              <input type="number" class="form-control" id="budget" value="5000" min="5000">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Type de service</label>
-              <select class="form-select" id="serviceType">
-                <option value="complet">Recherche + inspection + négociation</option>
-                <option value="inspection">Inspection seule</option>
-                <option value="negociation">Négociation seule</option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Urgence</label>
-              <select class="form-select" id="urgence">
-                <option value="normale">Normale</option>
-                <option value="rapide">Rapide (sous 72h)</option>
-              </select>
-            </div>
-          </div>
-          <p class="text-muted mt-3"><i class="fas fa-info-circle me-2"></i>Ces informations serviront à générer votre facture.</p>
+      <div class="contract-section reveal">
+        <h2 class="text-center mb-4"><i class="fas fa-lock gold-text me-2"></i>Espace de gestion des contrats</h2>
+        <div class="border-gold-bottom"></div>
+        
+        <!-- Zone de mot de passe (protégé par Chrismando@92) -->
+        <div id="passwordProtection" class="password-modal">
+          <i class="fas fa-key fa-3x gold-text mb-3"></i>
+          <h4>Accès sécurisé</h4>
+          <p>Veuillez entrer le mot de passe pour gérer les contrats</p>
+          <input type="password" id="passwordInput" class="password-input" placeholder="Mot de passe">
+          <button onclick="checkContractPassword()" class="btn btn-gold w-100">Déverrouiller</button>
+          <p class="mt-3 text-danger" id="passwordError" style="display: none;">Mot de passe incorrect</p>
         </div>
 
-        <!-- SECTION FACTURATION DYNAMIQUE -->
-        <div class="facture-section reveal">
-          <h3 class="mb-4"><i class="fas fa-calculator gold-text me-2"></i> Facture détaillée (calcul automatique)</h3>
-          <div class="row">
-            <div class="col-md-7">
-              <div id="factureApercu">
-                <h5 class="gold-text">AutoTrust – Facture</h5>
-                <p><strong>Client :</strong> <span id="factNom">Non renseigné</span></p>
-                <p><strong>Véhicule :</strong> <span id="factVehicule">Non renseigné</span></p>
-                <hr>
-                <div class="facture-row"><span>Frais d'ouverture de dossier :</span><span id="fraisDossier">200.00 $</span></div>
-                <div class="facture-row"><span>Frais d'inspection technique :</span><span id="fraisInspection">0.00 $</span></div>
-                <div class="facture-row"><span>Frais d'accompagnement final :</span><span id="fraisAccompagnement">120.00 $</span></div>
-                <div class="facture-row"><span>Négociation (pourcentage) :</span><span id="fraisNegociation">0.00 $</span></div>
-                <div class="facture-row"><span>Supplément urgence (rapide) :</span><span id="fraisUrgence">0.00 $</span></div>
-                <hr>
-                <div class="facture-total">Total TTC : <span id="totalFacture">320.00</span> $</div>
-                <hr>
-                <p class="small text-muted"><i class="fas fa-check-circle gold-text me-1"></i>Les termes et conditions ont été lus et approuvés avant le paiement.</p>
+        <!-- Zone de contrat (cachée par défaut) -->
+        <div id="contractManagement" style="display: none;">
+          <div class="contract-area">
+            <h3 class="gold-text mb-4"><i class="fas fa-file-contract me-2"></i>NOUVEAU CONTRAT DE MANDAT DE COURTAGE</h3>
+            <p class="text-muted">Remplissez les informations ci-dessous pour générer le contrat et la facture.</p>
+
+            <!-- Formulaire du contrat -->
+            <div class="row g-4">
+              <div class="col-md-6">
+                <label class="fw-bold">Nom et prénom du client</label>
+                <input type="text" id="clientName" class="form-control form-control-lg rounded-pill" placeholder="Ex: Jean Dupont">
+              </div>
+              <div class="col-md-6">
+                <label class="fw-bold">Adresse</label>
+                <input type="text" id="clientAddress" class="form-control form-control-lg rounded-pill" placeholder="Adresse complète">
+              </div>
+              <div class="col-md-6">
+                <label class="fw-bold">Téléphone</label>
+                <input type="text" id="clientPhone" class="form-control form-control-lg rounded-pill" placeholder="+243 XXX XXX XXX">
+              </div>
+              <div class="col-md-6">
+                <label class="fw-bold">Numéro d'identification (optionnel)</label>
+                <input type="text" id="clientId" class="form-control form-control-lg rounded-pill" placeholder="ID ou passeport">
+              </div>
+              <div class="col-md-6">
+                <label class="fw-bold">Marque du véhicule recherché</label>
+                <input type="text" id="carBrand" class="form-control form-control-lg rounded-pill" placeholder="Ex: Toyota">
+              </div>
+              <div class="col-md-6">
+                <label class="fw-bold">Modèle</label>
+                <input type="text" id="carModel" class="form-control form-control-lg rounded-pill" placeholder="Ex: RAV4">
+              </div>
+              <div class="col-md-6">
+                <label class="fw-bold">Budget estimé ($)</label>
+                <input type="number" id="carBudget" class="form-control form-control-lg rounded-pill" placeholder="8000">
+              </div>
+              <div class="col-md-6">
+                <label class="fw-bold">Autres critères</label>
+                <input type="text" id="carCriteria" class="form-control form-control-lg rounded-pill" placeholder="Année, couleur, etc.">
               </div>
             </div>
-            <div class="col-md-5">
-              <h5>Options supplémentaires</h5>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="optionInspection" value="inspection">
-                <label class="form-check-label">Inspection approfondie (+80$)</label>
+
+            <!-- Section facturation dynamique -->
+            <div class="invoice-card mt-5">
+              <h4 class="gold-text"><i class="fas fa-calculator me-2"></i>Récapitulatif des frais</h4>
+              <div class="row mt-4">
+                <div class="col-8">Frais d'ouverture de dossier (recherche & inspections) :</div>
+                <div class="col-4 text-end"><strong>200 $</strong></div>
+                <div class="col-8">Frais d'accompagnement final (si achat conclu) :</div>
+                <div class="col-4 text-end"><strong>120 $</strong></div>
+                <div class="col-8">Inspection complète (incluse dans ouverture) :</div>
+                <div class="col-4 text-end"><strong>0 $</strong></div>
+                <div class="col-8 border-top pt-2 mt-2 fw-bold">TOTAL À PAYER (ouverture) :</div>
+                <div class="col-4 border-top pt-2 mt-2 text-end fw-bold fs-4">200 $</div>
+                <div class="col-12 mt-3 small text-muted">* Les frais d'accompagnement final (120 $) ne sont dus que si vous achetez le véhicule trouvé.</div>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="optionNegociation" value="negociation">
-                <label class="form-check-label">Forfait négociation (2% du budget, max 150$)</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="optionUrgence" value="urgence">
-                <label class="form-check-label">Traitement rapide (+50$)</label>
-              </div>
-              <hr>
-              <button class="btn btn-gold w-100 mb-2" onclick="calculerFacture()"><i class="fas fa-sync-alt me-2"></i>Mettre à jour la facture</button>
-              <button class="btn btn-outline-gold w-100 mb-2" onclick="exporterPDF()"><i class="fas fa-file-pdf me-2"></i>Exporter en PDF</button>
-              <button class="btn btn-share w-100 mb-2" onclick="partagerWhatsApp()"><i class="fab fa-whatsapp me-2"></i>Partager sur WhatsApp</button>
-              <button class="btn btn-share w-100 mb-2" style="background:#0084ff;" onclick="partagerEmail()"><i class="far fa-envelope me-2"></i>Partager par email</button>
+            </div>
+
+            <!-- Acceptation conditions -->
+            <div class="form-check mt-4">
+              <input class="form-check-input" type="checkbox" id="acceptTerms">
+              <label class="form-check-label fw-bold" for="acceptTerms">
+                Je reconnais avoir lu et accepté les <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">termes et conditions</a> du service AutoTrust. (obligatoire)
+              </label>
+            </div>
+
+            <!-- Boutons d'action -->
+            <div class="share-buttons mt-4">
+              <button class="btn btn-pdf btn-share" onclick="generatePDF()"><i class="fas fa-file-pdf me-2"></i>Télécharger PDF</button>
+              <button class="btn btn-wa-share btn-share" onclick="shareWhatsApp()"><i class="fab fa-whatsapp me-2"></i>Partager WhatsApp</button>
+              <button class="btn btn-fb-share btn-share" onclick="shareMessenger()"><i class="fab fa-facebook-messenger me-2"></i>Messenger</button>
+              <button class="btn btn-email-share btn-share" onclick="shareEmail()"><i class="far fa-envelope me-2"></i>Email</button>
+            </div>
+
+            <!-- Zone de prévisualisation contrat (cachée mais utilisée pour PDF) -->
+            <div id="contractPreview" style="background: white; padding: 30px; border-radius: 20px; margin-top: 30px; border: 2px dashed var(--dore);">
+              <h3 class="text-center gold-text">CONTRAT DE MANDAT DE COURTAGE AUTOMOBILE</h3>
+              <p><strong>Entre AutoTrust</strong> (Nouvelle Galerie Présidentielle, Gombe, Kinshasa) et le client ci-dessous.</p>
+              <p><strong>Nom du client :</strong> <span id="previewName"></span><br>
+              <strong>Adresse :</strong> <span id="previewAddress"></span><br>
+              <strong>Téléphone :</strong> <span id="previewPhone"></span><br>
+              <strong>ID :</strong> <span id="previewId"></span></p>
+              <p><strong>Véhicule recherché :</strong> <span id="previewCar"></span> (Budget: <span id="previewBudget"></span> $) - <span id="previewCriteria"></span></p>
+              <p><strong>Frais :</strong> 200 $ d'ouverture de dossier + 120 $ d'accompagnement final (si achat).</p>
+              <p><strong>Durée du mandat :</strong> 30 jours renouvelables.</p>
+              <p><strong>Acceptation des conditions :</strong> <span id="previewAccept"></span></p>
+              <p>Fait à Kinshasa le : <span id="previewDate"></span></p>
+              <p>Signature Client : ___________________________</p>
+              <p>Signature AutoTrust : ________________________</p>
+              <p class="small text-muted mt-3">* Les termes et conditions ont été lus et approuvés avant paiement.</p>
             </div>
           </div>
         </div>
@@ -642,10 +618,10 @@
       <h2 class="text-center reveal">Pourquoi choisir AutoTrust ?</h2>
       <div class="border-gold-bottom"></div>
       <div class="row mt-5 g-4 text-center">
-        <div class="col-md-3 reveal"><i class="fas fa-scale-balanced fa-3x gold-text"></i><h5 class="mt-3">Indépendance totale</h5><p>Nous ne vendons pas de voitures.</p></div>
-        <div class="col-md-3 reveal"><i class="fas fa-microchip fa-3x gold-text"></i><h5 class="mt-3">Inspection experte</h5><p>Diagnostic complet.</p></div>
-        <div class="col-md-3 reveal"><i class="fas fa-file-lines fa-3x gold-text"></i><h5 class="mt-3">Rapport détaillé</h5><p>Photos, vidéos.</p></div>
-        <div class="col-md-3 reveal"><i class="fas fa-sack-dollar fa-3x gold-text"></i><h5 class="mt-3">Économies garanties</h5><p>Négociation incluse.</p></div>
+        <div class="col-md-3 reveal"><i class="fas fa-scale-balanced fa-3x gold-text"></i><h5 class="mt-3">Indépendance totale</h5><p>Nous ne vendons pas de voitures, nous vous conseillons.</p></div>
+        <div class="col-md-3 reveal"><i class="fas fa-microchip fa-3x gold-text"></i><h5 class="mt-3">Inspection experte</h5><p>Mécaniciens expérimentés, diagnostic complet.</p></div>
+        <div class="col-md-3 reveal"><i class="fas fa-file-lines fa-3x gold-text"></i><h5 class="mt-3">Contrats clairs</h5><p>Mandat écrit, pas de surprise.</p></div>
+        <div class="col-md-3 reveal"><i class="fas fa-sack-dollar fa-3x gold-text"></i><h5 class="mt-3">Négociation pro</h5><p>Nous obtenons souvent un meilleur prix.</p></div>
       </div>
     </div>
   </section>
@@ -656,9 +632,9 @@
       <h2 class="text-center reveal">Ils ont sécurisé leur achat</h2>
       <div class="border-gold-bottom"></div>
       <div class="row mt-5 g-4">
-        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Grâce à AutoTrust, j'ai évité une épave." – <strong>Patrick M.</strong></p></div></div>
-        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Courtier honnête, ils ont négocié 800$ de moins." – <strong>Sophie K.</strong></p></div></div>
-        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Achat serein, je recommande." – <strong>Jean-Paul D.</strong></p></div></div>
+        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow h-100"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Contrat clair, facture détaillée. J'ai acheté en toute confiance." – <strong>Patrick M.</strong></p></div></div>
+        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow h-100"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Le PDF généré m'a permis de partager avec mon conseiller." – <strong>Sophie K.</strong></p></div></div>
+        <div class="col-md-4 reveal"><div class="p-4 bg-white rounded-5 shadow h-100"><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><i class="fas fa-star gold-text"></i><p class="mt-3">"Espace contrat sécurisé, je gère tout en ligne." – <strong>Jean-Paul D.</strong></p></div></div>
       </div>
     </div>
   </section>
@@ -666,39 +642,68 @@
   <!-- APPEL À L'ACTION FINAL -->
   <section class="bg-bleu text-white text-center section-padding">
     <div class="container reveal">
-      <h2 class="text-white">Prêt à acheter en toute sécurité ?</h2>
+      <h2 class="text-white">Prêt à signer un mandat de courtage ?</h2>
       <p class="fs-2 fw-light">200$ pour lancer votre dossier.</p>
-      <a href="https://wa.me/243860122112?text=Bonjour,%20je%20veux%20ouvrir%20un%20dossier" target="_blank" class="btn btn-gold btn-lg px-5 py-3 mt-3"><i class="fab fa-whatsapp me-2"></i>Contacter un courtier</a>
+      <a href="#contract-section" class="btn btn-gold btn-lg px-5 py-3 mt-3"><i class="fas fa-file-signature me-2"></i>C'est parti</a>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- FOOTER avec lien admin -->
   <footer class="footer">
     <div class="container">
       <div class="row gy-4">
         <div class="col-md-5">
           <h3 class="text-white">Auto<span class="gold-text">Trust</span></h3>
-          <p>© AutoTrust – Courtage automobile professionnel.</p>
+          <p>© AutoTrust – Courtage automobile professionnel.<br>
+          <span class="admin-link" onclick="document.getElementById('contract-section').scrollIntoView({behavior:'smooth'});"><i class="fas fa-lock me-1"></i>Espace administrateur (contrats)</span></p>
         </div>
         <div class="col-md-4">
           <h5>Liens</h5>
           <ul class="list-unstyled">
             <li><a href="#courtier">Mission</a></li>
             <li><a href="#services">Tarifs</a></li>
-            <li><a href="#contrat">Contrat & facture</a></li>
+            <li><a href="#process">Processus</a></li>
+            <li><a href="#quiz">Quiz</a></li>
           </ul>
         </div>
         <div class="col-md-3">
           <p><i class="fab fa-whatsapp gold-text me-2"></i> +243 860 122 112</p>
           <p><i class="far fa-envelope gold-text me-2"></i> contact@autotrust.cd</p>
+          <p><i class="fas fa-map-pin gold-text me-2"></i> Nouvelle Galerie Présidentielle, Gombe</p>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- SCRIPT PRINCIPAL -->
+  <!-- Modal des termes et conditions -->
+  <div class="modal fade" id="termsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-bleu text-white">
+          <h5 class="modal-title">Termes et conditions AutoTrust</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <h6>1. Nature du service</h6>
+          <p>AutoTrust est un service de courtage et d’accompagnement automobile. L’entreprise agit comme intermédiaire entre l’acheteur et le vendeur.</p>
+          <h6>2. Inspection des véhicules</h6>
+          <p>L’inspection consiste en une analyse visuelle et mécanique générale selon les compétences disponibles. Elle réduit les risques mais ne constitue pas une garantie absolue contre les pannes futures.</p>
+          <h6>3. Responsabilité</h6>
+          <p>AutoTrust ne peut être tenu responsable des défaillances mécaniques, pannes ou problèmes pouvant apparaître après l’achat.</p>
+          <h6>4. Paiement des services</h6>
+          <p>Les frais d’ouverture de dossier (200 $) sont non remboursables. Les frais d’accompagnement final (120 $) ne sont dus qu’en cas d’achat conclu.</p>
+          <h6>5. Décision finale d’achat</h6>
+          <p>Le client reconnaît que la décision d’acheter lui appartient entièrement.</p>
+          <p class="fw-bold mt-3">En signant, le client reconnaît avoir lu, compris et accepté ces conditions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // INTRO SPLASH
+    // ---------- INTRO SPLASH ----------
     window.addEventListener('load', function() {
       setTimeout(() => {
         document.getElementById('intro-splash').style.opacity = '0';
@@ -708,7 +713,7 @@
       }, 7000);
     });
 
-    // REVEAL SCROLL
+    // ---------- REVEAL SCROLL ----------
     const revealElements = document.querySelectorAll('.reveal');
     function updateReveal() {
       const windowHeight = window.innerHeight;
@@ -721,17 +726,92 @@
     window.addEventListener('scroll', updateReveal);
     window.addEventListener('load', updateReveal);
 
-    // ========== QUIZ AVEC TIMER ==========
+    // ---------- CONTRAT PASSWORD PROTECTION ----------
+    function checkContractPassword() {
+      const pwd = document.getElementById('passwordInput').value;
+      if (pwd === 'Chrismando@92') {
+        document.getElementById('passwordProtection').style.display = 'none';
+        document.getElementById('contractManagement').style.display = 'block';
+      } else {
+        document.getElementById('passwordError').style.display = 'block';
+      }
+    }
+
+    // Mise à jour de la prévisualisation
+    function updatePreview() {
+      document.getElementById('previewName').textContent = document.getElementById('clientName').value || '__________________________';
+      document.getElementById('previewAddress').textContent = document.getElementById('clientAddress').value || '__________________________';
+      document.getElementById('previewPhone').textContent = document.getElementById('clientPhone').value || '__________________________';
+      document.getElementById('previewId').textContent = document.getElementById('clientId').value || '__________________________';
+      const car = (document.getElementById('carBrand').value || '______') + ' ' + (document.getElementById('carModel').value || '______');
+      document.getElementById('previewCar').textContent = car;
+      document.getElementById('previewBudget').textContent = document.getElementById('carBudget').value || '______';
+      document.getElementById('previewCriteria').textContent = document.getElementById('carCriteria').value || '______';
+      const today = new Date().toLocaleDateString('fr-FR');
+      document.getElementById('previewDate').textContent = today;
+      const accept = document.getElementById('acceptTerms').checked ? 'Oui' : 'Non';
+      document.getElementById('previewAccept').textContent = accept;
+    }
+
+    // Écouteurs d'événements pour mise à jour
+    ['clientName','clientAddress','clientPhone','clientId','carBrand','carModel','carBudget','carCriteria'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updatePreview);
+    });
+    document.getElementById('acceptTerms').addEventListener('change', updatePreview);
+
+    // Génération PDF
+    function generatePDF() {
+      if (!document.getElementById('acceptTerms').checked) {
+        alert('Vous devez accepter les termes et conditions.');
+        return;
+      }
+      updatePreview();
+      const element = document.getElementById('contractPreview');
+      html2canvas(element, { scale: 2 }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('contrat_autotrust.pdf');
+      });
+    }
+
+    // Partage WhatsApp
+    function shareWhatsApp() {
+      if (!document.getElementById('acceptTerms').checked) {
+        alert('Veuillez accepter les conditions.');
+        return;
+      }
+      const name = document.getElementById('clientName').value || 'Client';
+      const text = `Contrat AutoTrust pour ${name} - 200$ ouverture dossier. Accepté.`;
+      const url = `https://wa.me/243860122112?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+
+    function shareMessenger() {
+      alert('Partagez le PDF généré manuellement sur Messenger.');
+    }
+
+    function shareEmail() {
+      const name = document.getElementById('clientName').value || 'Client';
+      const subject = 'Contrat AutoTrust';
+      const body = `Contrat pour ${name}. Veuillez trouver le PDF ci-joint (à générer).`;
+      window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    // ---------- QUIZ (identique à avant) ----------
     const quizQuestions = [
       { question: "Quel est le premier réflexe à avoir avant d'acheter une voiture d'occasion ?", options: ["Vérifier la couleur", "Demander l'historique d'entretien et faire inspecter", "Regarder les pneus", "Écouter la radio"], correct: 1, explanation: "L'historique d'entretien et une inspection technique sont essentiels." },
-      { question: "Pourquoi faire appel à un courtier comme AutoTrust ?", options: ["Pour payer plus cher", "Pour bénéficier d'une recherche, inspection et négociation pro", "Pour ralentir", "Pour avoir un tampon"], correct: 1, explanation: "Un courtier indépendant vous protège." },
+      { question: "Pourquoi faire appel à un courtier comme AutoTrust ?", options: ["Pour payer plus cher", "Pour bénéficier d'une recherche, inspection et négociation pro", "Pour ralentir le processus", "Pour avoir un tampon"], correct: 1, explanation: "Un courtier indépendant vous protège." },
       { question: "Que signifie un certificat de non-gage ?", options: ["Que la voiture n'est pas volée ni gagée", "Que le moteur est garanti", "Que le vendeur est sérieux", "Que le prix est bas"], correct: 0, explanation: "Il garantit l'absence de créance." },
-      { question: "Quel est le budget minimum pour AutoTrust ?", options: ["1 000 $", "5 000 $", "10 000 $", "Pas de minimum"], correct: 1, explanation: "Nous travaillons à partir de 5 000 $." },
+      { question: "Quel est le budget minimum pour utiliser AutoTrust ?", options: ["1 000 $", "5 000 $", "10 000 $", "Pas de minimum"], correct: 1, explanation: "Nous travaillons à partir de 5 000 $." },
       { question: "Quels sont les frais d'ouverture de dossier ?", options: ["50 $", "200 $", "300 $", "Gratuit"], correct: 1, explanation: "200 $ pour la recherche et inspections préparatoires." },
-      { question: "Que se passe-t-il après inspection si le véhicule est bon ?", options: ["On vous le recommande et on négocie", "On l'achète sans vous demander", "On augmente le prix", "On garde l'info"], correct: 0, explanation: "Notre rôle est de vous recommander les bons véhicules." },
-      { question: "Que fait AutoTrust si le véhicule est dangereux ?", options: ["On le vend quand même", "On vous conseille de ne pas l'acheter", "On le répare", "On ignore"], correct: 1, explanation: "Notre éthique : ne jamais recommander un véhicule risqué." },
-      { question: "Quel est le tarif d'accompagnement final ?", options: ["120 $", "200 $", "80 $", "250 $"], correct: 0, explanation: "120 $ pour l'assistance finale." },
-      { question: "L'inspection inclut-elle un essai routier ?", options: ["Non", "Oui, toujours", "Sur demande", "Seulement pour les voitures chères"], correct: 1, explanation: "L'essai routier fait partie intégrante de notre inspection." },
+      { question: "Que se passe-t-il après l'inspection si le véhicule est bon ?", options: ["On vous le recommande et on négocie", "On l'achète sans vous demander", "On augmente le prix", "On garde l'info"], correct: 0, explanation: "Notre rôle est de vous recommander les bons véhicules." },
+      { question: "Que fait AutoTrust si le véhicule est dangereux ?", options: ["On le vend quand même", "On vous conseille de ne pas l'acheter", "On le répare nous-mêmes", "On ignore"], correct: 1, explanation: "Notre éthique : ne jamais recommander un véhicule risqué." },
+      { question: "Quel est le tarif d'accompagnement final si vous achetez ?", options: ["120 $", "200 $", "80 $", "250 $"], correct: 0, explanation: "120 $ pour l'assistance jusqu'à la vente." },
+      { question: "L'inspection technique effectuée par AutoTrust inclut-elle un essai routier ?", options: ["Non", "Oui, toujours", "Uniquement sur demande", "Seulement pour les voitures chères"], correct: 1, explanation: "L'essai routier fait partie intégrante de notre inspection." },
       { question: "Pourquoi les vendeurs acceptent-ils mieux la négociation avec AutoTrust ?", options: ["Parce qu'on est plus nombreux", "Parce qu'ils savent qu'on détecte les défauts", "Parce qu'on paie cash", "Aucune raison"], correct: 1, explanation: "Notre expertise technique nous donne un levier de négociation." }
     ];
 
@@ -746,22 +826,32 @@
     const timerDisplay = document.getElementById('timerDisplay');
 
     function stopTimer() {
-      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
     }
+
     function startTimerForCurrentQuestion() {
-      stopTimer(); timeLeft = 12; timerDisplay.textContent = timeLeft + 's';
+      stopTimer();
+      timeLeft = 12;
+      timerDisplay.textContent = timeLeft + 's';
       timerInterval = setInterval(() => {
-        timeLeft--; timerDisplay.textContent = timeLeft + 's';
+        timeLeft--;
+        timerDisplay.textContent = timeLeft + 's';
         if (timeLeft <= 0) {
           stopTimer();
           if (quizActive && currentIdx < quizQuestions.length - 1) {
-            currentIdx++; displayQuestion(currentIdx);
+            currentIdx++;
+            displayQuestion(currentIdx);
           } else if (quizActive && currentIdx === quizQuestions.length - 1) {
-            stopTimer(); computeQuizResults();
+            stopTimer();
+            computeQuizResults();
           }
         }
       }, 1000);
     }
+
     function displayQuestion(index) {
       if (!quizActive) return;
       const q = quizQuestions[index];
@@ -775,28 +865,43 @@
       quizNextBtn.textContent = (index === quizQuestions.length - 1) ? 'Voir mes résultats' : 'Question suivante →';
       startTimerForCurrentQuestion();
     }
+
     window.selectQuizAnswer = function(qIdx, optIdx) {
       answers[qIdx] = optIdx;
       displayQuestion(currentIdx);
     };
+
     window.handleQuizNext = function() {
       if (!quizActive) {
-        quizActive = true; currentIdx = 0; answers.fill(null);
+        quizActive = true;
+        currentIdx = 0;
+        answers.fill(null);
         quizResultDiv.style.display = 'none';
-        displayQuestion(0); return;
+        displayQuestion(0);
+        return;
       }
       if (currentIdx >= quizQuestions.length) {
-        quizActive = true; currentIdx = 0; answers.fill(null);
-        quizResultDiv.style.display = 'none'; displayQuestion(0); return;
+        quizActive = true;
+        currentIdx = 0;
+        answers.fill(null);
+        quizResultDiv.style.display = 'none';
+        displayQuestion(0);
+        return;
       }
       stopTimer();
       if (currentIdx < quizQuestions.length - 1) {
-        currentIdx++; displayQuestion(currentIdx);
-      } else { computeQuizResults(); }
+        currentIdx++;
+        displayQuestion(currentIdx);
+      } else {
+        computeQuizResults();
+      }
     };
+
     function computeQuizResults() {
-      stopTimer(); timerDisplay.textContent = '12s';
-      let correctCount = 0, explanations = '';
+      stopTimer();
+      timerDisplay.textContent = '12s';
+      let correctCount = 0;
+      let explanations = '';
       quizQuestions.forEach((q, idx) => {
         const userChoice = answers[idx];
         const isCorrect = (userChoice === q.correct);
@@ -806,86 +911,12 @@
         explanations += `<div class="explain-item"><strong>${idx+1}. ${q.question}</strong><br>${isCorrect ? '✅' : '❌'} Votre réponse : ${userAnsText}<br><span class="gold-text fw-semibold">✔ Réponse correcte : ${correctText}</span><br><small>${q.explanation}</small></div>`;
       });
       let profileMsg = correctCount <= 3 ? "🔴 Vous êtes très exposé aux risques." : correctCount <= 7 ? "🟡 Bonnes bases, mais quelques angles morts." : "🟢 Excellent niveau !";
-      quizResultDiv.innerHTML = `<h3>Résultat : ${correctCount}/10</h3><p class="fs-4">${profileMsg}</p>${explanations}<div class="text-center mt-4"><a href="https://wa.me/243860122112?text=Bonjour,%20j'ai%20fait%20le%20quiz%20chrono" target="_blank" class="btn btn-gold py-3 px-5"><i class="fab fa-whatsapp me-2"></i>Discuter</a></div>`;
+      quizResultDiv.innerHTML = `<h3>Résultat : ${correctCount}/10</h3><p class="fs-4 fw-light">${profileMsg}</p>${explanations}<div class="text-center mt-4"><a href="https://wa.me/243860122112?text=Bonjour,%20j'ai%20fait%20le%20quiz%20chrono" target="_blank" class="btn btn-gold py-3 px-5"><i class="fab fa-whatsapp me-2"></i>Discuter</a></div>`;
       quizResultDiv.style.display = 'block';
-      quizContainer.innerHTML = ''; quizNextBtn.textContent = '⟲ Refaire le quiz';
+      quizContainer.innerHTML = '';
+      quizNextBtn.textContent = '⟲ Refaire le quiz';
       currentIdx = quizQuestions.length;
     }
-
-    // ========== PROTECTION PAR MOT DE PASSE ==========
-    window.checkPassword = function() {
-      const pwd = document.getElementById('passwordInput').value;
-      if (pwd === 'Chrismando@92') {
-        document.getElementById('passwordBlock').style.display = 'none';
-        document.getElementById('protectedContent').style.display = 'block';
-      } else {
-        document.getElementById('passwordError').innerText = 'Mot de passe incorrect.';
-      }
-    };
-
-    // ========== FACTURATION DYNAMIQUE ==========
-    function calculerFacture() {
-      // Récupérer infos client
-      const nom = document.getElementById('clientNom').value || 'Non renseigné';
-      const vehicule = document.getElementById('vehiculeModele').value || 'Non renseigné';
-      document.getElementById('factNom').innerText = nom;
-      document.getElementById('factVehicule').innerText = vehicule;
-
-      // Frais fixes
-      let dossier = 200;
-      let accompagnement = 120;
-      let inspection = 0;
-      let negociation = 0;
-      let urgence = 0;
-
-      if (document.getElementById('optionInspection').checked) inspection = 80;
-      if (document.getElementById('optionNegociation').checked) {
-        let budget = parseFloat(document.getElementById('budget').value) || 5000;
-        negociation = Math.min(budget * 0.02, 150);
-      }
-      if (document.getElementById('optionUrgence').checked) urgence = 50;
-
-      // Mise à jour affichage
-      document.getElementById('fraisDossier').innerText = dossier.toFixed(2) + ' $';
-      document.getElementById('fraisInspection').innerText = inspection.toFixed(2) + ' $';
-      document.getElementById('fraisAccompagnement').innerText = accompagnement.toFixed(2) + ' $';
-      document.getElementById('fraisNegociation').innerText = negociation.toFixed(2) + ' $';
-      document.getElementById('fraisUrgence').innerText = urgence.toFixed(2) + ' $';
-
-      let total = dossier + accompagnement + inspection + negociation + urgence;
-      document.getElementById('totalFacture').innerText = total.toFixed(2);
-    }
-
-    // Initialiser au chargement
-    window.addEventListener('load', function() {
-      calculerFacture();
-      // écouter les changements
-      document.getElementById('clientNom').addEventListener('input', calculerFacture);
-      document.getElementById('vehiculeModele').addEventListener('input', calculerFacture);
-      document.getElementById('budget').addEventListener('input', calculerFacture);
-    });
-
-    // Export PDF
-    window.exporterPDF = function() {
-      const element = document.getElementById('factureApercu');
-      const opt = { margin: [0.5, 0.5, 0.5, 0.5], filename: 'AutoTrust_facture.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } };
-      html2pdf().set(opt).from(element).save();
-    };
-
-    // Partage WhatsApp
-    window.partagerWhatsApp = function() {
-      let total = document.getElementById('totalFacture').innerText;
-      let texte = "Facture AutoTrust - Total : " + total + " $. Détails : " + window.location.href;
-      let url = "https://wa.me/?text=" + encodeURIComponent(texte);
-      window.open(url, '_blank');
-    };
-
-    // Partage email
-    window.partagerEmail = function() {
-      let sujet = "Votre facture AutoTrust";
-      let corps = "Consultez votre facture en ligne : " + window.location.href;
-      window.location.href = "mailto:?subject=" + encodeURIComponent(sujet) + "&body=" + encodeURIComponent(corps);
-    };
 
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
